@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-class User::SessionsController < Devise::SessionsController
+class Users::SessionsController < Devise::SessionsController
   respond_to :json
+
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
@@ -35,5 +36,5 @@ class User::SessionsController < Devise::SessionsController
   def respond_to_on_destroy
     head :ok
   end
-
+  
 end
