@@ -2,6 +2,7 @@
 
 class Users::SessionsController < Devise::SessionsController
   respond_to :json
+  skip_before_action :verify_signed_out_user, only: [:destroy]
 
   # before_action :configure_sign_in_params, only: [:create]
 
@@ -34,7 +35,7 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def respond_to_on_destroy
-    head :ok
+    head :no_content
   end
-  
+
 end
