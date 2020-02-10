@@ -17,7 +17,7 @@ gem 'puma', '~> 4.1'
 gem 'bcrypt', '~> 3.1.7'
 gem 'rack-cors'
 gem 'devise'
-gem 'devise-jwt'
+# gem 'devise-jwt'
 gem 'dotenv-rails'
 
 # Use Active Storage variant
