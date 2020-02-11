@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  assigned_to_id: 1
+  completion_date: 2020-02-10 19:30:56
+  cancel_date: 2020-02-10 19:30:56
+  status: MyString
+  for_creator_review_id: 1
+  for_assignee_review_id: 1
+
+two:
+  assigned_to_id: 1
+  completion_date: 2020-02-10 19:30:56
+  cancel_date: 2020-02-10 19:30:56
+  status: MyString
+  for_creator_review_id: 1
+  for_assignee_review_id: 1

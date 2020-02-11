@@ -1,0 +1,2 @@
+class PostApplication < ApplicationRecord
+end

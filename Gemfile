@@ -19,6 +19,7 @@ gem 'rack-cors'
 gem 'devise'
 # gem 'devise-jwt'
 gem 'dotenv-rails'
+gem 'faker'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
