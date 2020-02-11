@@ -10,10 +10,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_05_005924) do
+ActiveRecord::Schema.define(version: 2020_02_11_011709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "assignments", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "post_id"
+    t.string "status", default: "Assigned"
+    t.datetime "completion_date"
+    t.string "cancel_reason"
+    t.datetime "cancel_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_assignments_on_post_id"
+    t.index ["user_id"], name: "index_assignments_on_user_id"
+  end
+
+  create_table "post_applications", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "post_id"
+    t.boolean "accepted", default: false
+    t.boolean "confirmed", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_post_applications_on_post_id"
+    t.index ["user_id"], name: "index_post_applications_on_user_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.datetime "start_datetime"
+    t.datetime "end_datetime"
+    t.datetime "expiration_datetime"
+    t.string "location"
+    t.bigint "user_id"
+    t.boolean "active", default: true
+    t.boolean "completed", default: false
+    t.boolean "cancelled", default: false
+    t.decimal "allowance", precision: 16, scale: 2
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name", null: false

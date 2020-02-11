@@ -8,8 +8,9 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.datetime :expiration_datetime
       t.string :location
       t.belongs_to :user
-      t.has_many :assignments
       t.boolean :active, default: true
+      t.boolean :completed, default: false
+      t.boolean :cancelled, default: false
       t.decimal :allowance, precision: 16, scale: 2
 
       t.timestamps
