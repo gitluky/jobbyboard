@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
-    color: 'black'
+    color: 'inherit'
   },
 }));
 
@@ -66,16 +66,12 @@ const Navigationbar = ({ user }) =>  {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none'}}>
+      <AppBar position="static" style={{ background: 'primary', boxShadow: 'none'}}>
         <Toolbar>
-
-          <Paper className={classes.paper}>
-          </Paper>
-          <div>
             <IconButton
               edge="start"
               className={classes.menuButton}
-              color="black"
+              color="inherit"
               aria-label="menu"
               ref={anchorRef}
               aria-controls={open ? 'menu-list-grow' : undefined}
@@ -94,23 +90,20 @@ const Navigationbar = ({ user }) =>  {
                   <Paper>
                     <ClickAwayListener onClickAway={handleClose}>
                       <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                        <MenuItem onClick={handleClose}><NavLink to="/users/:id/dashboard" exact style={{ textDecoration: 'none', color: 'black' }} activeClassName="active" >Dashboard</NavLink></MenuItem>
-                        <MenuItem onClick={handleClose}><NavLink to="/users/:id" exact style={{ textDecoration: 'none', color: 'black' }} activeClassName="active" >My Profile</NavLink></MenuItem>
-                        <MenuItem onClick={handleClose}><NavLink to="/users/:id/activity" exact style={{ textDecoration: 'none', color: 'black' }} activeClassName="active" >Activty</NavLink></MenuItem>
+                        <MenuItem onClick={handleClose} component={NavLink} to="/users/:id/dashboard" style={{ textDecoration: 'none', color: 'default' }} activeClassName="active" >Dashboard</MenuItem>
+                        <MenuItem onClick={handleClose} component={NavLink} to="/users/:id" style={{ textDecoration: 'none', color: 'default' }} activeClassName="active" >My Profile</MenuItem>
+                        <MenuItem onClick={handleClose} component={NavLink} to="/users/:id/activity" style={{ textDecoration: 'none', color: 'default' }} activeClassName="active" >Activity</MenuItem>
                       </MenuList>
                     </ClickAwayListener>
                   </Paper>
                 </Grow>
               )}
             </Popper>
-          </div>
-
-
 
           <Typography variant="h6" className={classes.title}>
             Jobbyboard
           </Typography>
-          <Button color="black"><Link to="/sign_in" exact style={{ textDecoration: 'none', color: 'black' }} activeClassName="active" >Sign In</Link></Button>
+          <Button component={ Link } to="/sign_in" style={{ textDecoration: 'none', color: 'inherit'}} >Sign In</Button>
         </Toolbar>
       </AppBar>
     </div>

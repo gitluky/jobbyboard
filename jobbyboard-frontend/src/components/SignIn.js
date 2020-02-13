@@ -1,6 +1,8 @@
 import React from 'react';
 import { Paper, Grid, TextField, Button, Card, makeStyles } from '@material-ui/core';
 
+import useFormInput from '../hooks/useFormInput'
+
 const useStyles = makeStyles(theme => ({
   paper: {
     margin: theme.spacing(8),
@@ -20,6 +22,9 @@ const useStyles = makeStyles(theme => ({
 
 const SignIn = () => {
   const classes = useStyles();
+  let email = useFormInput('');
+  let password = useFormInput('');
+
   return(
     <>
       <Paper className={classes.paper}>
@@ -34,6 +39,7 @@ const SignIn = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            {...email}
           />
           <TextField
             variant="outlined"
@@ -45,6 +51,7 @@ const SignIn = () => {
             type="password"
             id="password"
             autoComplete="current-password"
+            {...password}
           />
           <Button
             type="submit"
@@ -58,5 +65,7 @@ const SignIn = () => {
     </>
   )
 }
+
+
 
 export default SignIn;
