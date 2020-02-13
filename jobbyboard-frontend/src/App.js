@@ -1,21 +1,25 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
 import Navigationbar from './components/Navigationbar';
 import FormContainer from './components/FormContainer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { useEffect } from 'react';
 
-export default class App extends Component {
+const App = (props) => {
 
-  render() {
-    return (
-      <Router>
-        <div>
-          <Navigationbar />
-          <Route path='/' render={routerProps => <FormContainer {...routerProps} />} />
-        </div>
-      </Router>
-    );
-  }
+  useEffect(() => {
+    props.dispatch({type: 'SET_API_DOMAIN', payload: 'http://localhost:3001' })
+  })
+
+  return (
+    <Router>
+      <div>
+        <Navigationbar />
+        <Route path='/' render={routerProps => <FormContainer {...routerProps} />} />
+      </div>
+    </Router>
+  );
 
 }
+
+export default connect()(App);

@@ -8,10 +8,12 @@ import thunk from 'redux-thunk';
 
 import sessionsReducer from './reducers/sessionsReducer';
 import postsReducer from './reducers/postsReducer';
+import apiReducer from './reducers/apiReducer';
 
 const rootReducer = combineReducers({
   session: sessionsReducer,
-  posts: postsReducer
+  posts: postsReducer,
+  api: apiReducer
 });
 
 const store = createStore(rootReducer, compose(
@@ -20,7 +22,9 @@ const store = createStore(rootReducer, compose(
 ));
 
 ReactDOM.render(
-  <App />,
+  <Provider store={store}>
+    <App />
+  </Provider>,
 document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

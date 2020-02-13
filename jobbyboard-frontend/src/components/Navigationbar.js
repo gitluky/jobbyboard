@@ -100,9 +100,10 @@ const Navigationbar = ({ user }) =>  {
               )}
             </Popper>
 
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h5" className={classes.title}>
             Jobbyboard
           </Typography>
+          <Button component={ Link } to="/search" style={{ textDecoration: 'none', color: 'inherit'}} >Search</Button>
           <Button component={ Link } to="/sign_in" style={{ textDecoration: 'none', color: 'inherit'}} >Sign In</Button>
         </Toolbar>
       </AppBar>

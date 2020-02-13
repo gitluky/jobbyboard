@@ -1,5 +1,6 @@
 import React from 'react';
-import { Paper, Grid, TextField, Button, Card, makeStyles } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { Typography, Paper, TextField, Button, makeStyles } from '@material-ui/core';
 
 import useFormInput from '../hooks/useFormInput'
 
@@ -25,13 +26,12 @@ const SignIn = () => {
   let email = useFormInput('');
   let password = useFormInput('');
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  }
-
   return(
     <>
       <Paper className={classes.paper}>
+        <Typography variant="h5" className={classes.title}>
+          Sign In
+        </Typography>
          <form className={classes.form} noValidate>
           <TextField
             variant="outlined"
@@ -70,6 +70,10 @@ const SignIn = () => {
   )
 }
 
+const mapStateToProps = (state) => {
+  return {state: state};
+}
 
 
-export default SignIn;
+
+export default connect(mapStateToProps)(SignIn);
