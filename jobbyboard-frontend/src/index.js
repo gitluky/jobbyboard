@@ -2,8 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { createStore } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+
+import sessionsReducer from './reducers/sessionsReducer';
+import postsReducer from './reducers/postsReducer';
+
+const rootReducer = combineReducers({
+  session: sessionsReducer,
+  posts: postsReducer
+});
+
+const store = createStore(rootReducer, compose(
+  applyMiddleware(thunk),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+));
 
 ReactDOM.render(
   <App />,

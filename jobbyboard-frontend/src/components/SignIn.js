@@ -25,6 +25,10 @@ const SignIn = () => {
   let email = useFormInput('');
   let password = useFormInput('');
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  }
+
   return(
     <>
       <Paper className={classes.paper}>
