@@ -1,25 +1,27 @@
 import React from 'react';
 import Navigationbar from './components/Navigationbar';
 import FormContainer from './components/FormContainer';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import DashBoardContainer from './components/DashBoardContainer';
 import { connect } from 'react-redux';
 import { useEffect } from 'react';
+import { setApiDomain } from './actions/setup';
+import { isSignedIn } from './actions/sessionsActions';
 
-const App = (props) => {
+class App extends React.Component {
 
-  useEffect(() => {
-    props.dispatch({type: 'SET_API_DOMAIN', payload: 'http://localhost:3001' })
-  })
+  componentDidMount() {
+    this.props.setApiDomain('http://localhost:3001');
+    this.props.isSignedIn('http://localhost:3001');
+  }
 
-  return (
-    <Router>
+  render() {
+    return(
       <div>
-        <Navigationbar />
-        <Route path='/' render={routerProps => <FormContainer {...routerProps} />} />
+        <Navigationbar {...this.props} />
+        <FormContainer {...this.props} />
       </div>
-    </Router>
-  );
-
+    )
+  }
 }
 
-export default connect()(App);
+export default connect(null, { setApiDomain, isSignedIn })(App);

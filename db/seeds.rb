@@ -1,5 +1,5 @@
 10.times do
-  user = User.create(name: Faker::Name.name, email: Faker::Internet.email, password: "password")
+  user = User.create(name: Faker::Name.name, email: Faker::Internet.email, password: "password", jti: SecureRandom.uuid)
   10.times do
     start_datetime = Time.now + rand(2628000)
     end_datetime = start_datetime + rand(86400)

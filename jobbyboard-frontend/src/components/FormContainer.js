@@ -3,10 +3,10 @@ import { Route } from 'react-router-dom';
 import { Container, Grid } from '@material-ui/core';
 
 import SignIn from './SignIn';
-import SearchJobby from './SearchJobby'
+import SearchPosts from './SearchPosts'
 
 
-const FormContainer = ({ match }) => {
+const FormContainer = () => {
   return (
     <>
       <Container maxWidth="lg">
@@ -16,10 +16,10 @@ const FormContainer = ({ match }) => {
           alignItems="center"
         >
           <Grid item>
-            <Route exact path={`${match.url}sign_in`} component={SignIn} />
+            <Route exact path='/sign_in' component={SignIn} />
+            <Route path='/search' component={SearchPosts} />
           </Grid>
         </Grid>
-        <Route path={`${match.url}search`} component={SearchJobby} />
       </Container>
     </>
   )

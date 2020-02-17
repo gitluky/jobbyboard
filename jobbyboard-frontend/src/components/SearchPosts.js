@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SearchJobby = () => {
+const SearchPosts = () => {
   const classes = useStyles();
   let keywords = useFormInput('');
   let location = useFormInput('');
@@ -30,7 +30,7 @@ const SearchJobby = () => {
     <>
       <Paper className={classes.paper}>
         <Typography variant="h5" className={classes.title}>
-          Search Posts
+          SearchPosts Posts
         </Typography>
          <form className={classes.form} noValidate>
            <Grid container spacing={2}>
@@ -69,11 +69,11 @@ const SearchJobby = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-          >Search</Button>
+          >SearchPosts</Button>
         </form>
       </Paper>
     </>
   )
 }
 
-export default connect()(SearchJobby);
+export default connect()(SearchPosts);

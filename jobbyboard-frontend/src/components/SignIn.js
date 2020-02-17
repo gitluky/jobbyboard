@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Typography, Paper, TextField, Button, makeStyles } from '@material-ui/core';
+import { signInUser} from '../actions/sessionsActions'
 
 import useFormInput from '../hooks/useFormInput'
 
@@ -21,10 +22,16 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SignIn = () => {
+const SignIn = ({signInUser, apiDomain, history }) => {
   const classes = useStyles();
   let email = useFormInput('');
   let password = useFormInput('');
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    let payload = {email: email.value, password: password.value};
+    signInUser(apiDomain, payload, history);
+  }
 
   return(
     <>
@@ -32,7 +39,7 @@ const SignIn = () => {
         <Typography variant="h5" className={classes.title}>
           Sign In
         </Typography>
-         <form className={classes.form} noValidate>
+         <form className={classes.form} noValidate onSubmit={handleSubmit} >
           <TextField
             variant="outlined"
             margin="normal"
@@ -71,9 +78,9 @@ const SignIn = () => {
 }
 
 const mapStateToProps = (state) => {
-  return {state: state};
+  return {apiDomain: state.api.domain};
 }
 
 
 
-export default connect(mapStateToProps)(SignIn);
+export default connect(mapStateToProps, {signInUser})(SignIn);

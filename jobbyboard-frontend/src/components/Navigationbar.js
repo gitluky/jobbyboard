@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import SearchJobby from './SearchJobby';
+import SearchPosts from './SearchPosts';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -90,7 +90,7 @@ const Navigationbar = ({ user }) =>  {
                   <Paper>
                     <ClickAwayListener onClickAway={handleClose}>
                       <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                        <MenuItem onClick={handleClose} component={NavLink} to="/users/:id/dashboard" style={{ textDecoration: 'none', color: 'default' }} activeClassName="active" >Dashboard</MenuItem>
+                        <MenuItem onClick={handleClose} component={NavLink} to="/dashboard" style={{ textDecoration: 'none', color: 'default' }} activeClassName="active" >Dashboard</MenuItem>
                         <MenuItem onClick={handleClose} component={NavLink} to="/users/:id" style={{ textDecoration: 'none', color: 'default' }} activeClassName="active" >My Profile</MenuItem>
                         <MenuItem onClick={handleClose} component={NavLink} to="/users/:id/activity" style={{ textDecoration: 'none', color: 'default' }} activeClassName="active" >Activity</MenuItem>
                       </MenuList>

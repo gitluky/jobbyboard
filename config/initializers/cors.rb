@@ -4,6 +4,7 @@
 # Handle Cross-Origin Resource Sharing (CORS) in order to accept cross-origin AJAX requests.
 
 # Read more: https://github.com/cyu/rack-cors
+# Rails.application.config.action_controller.forgery_protection_origin_check = false
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
@@ -11,7 +12,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
 
     resource '*',
       headers: :any,
-      expose: ["Authorization"],
-      methods: [:get, :post, :put, :patch, :delete, :options, :head]
+      methods: :any,
+      expose: ['Authorization']
   end
 end
