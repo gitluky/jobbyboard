@@ -1,11 +1,11 @@
 export default function sessionsReducer(state = {}, action) {
   switch(action.type) {
     case 'SIGN_IN':
-      return { ...state, data: action.payload }
+      return { ...state, isSignedIn: true, user: action.payload }
     case 'SIGN_OUT':
-      return { ...state, data: action.payload }
-    case 'IS_SIGNED_IN':
-      return {...state, isSignedIn: action.payload }
+      return { ...state, user: action.payload }
+    case 'GET_TOKEN':
+      return { ...state, jwt: action.payload }
     default:
       return state;
   }

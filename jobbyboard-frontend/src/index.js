@@ -18,7 +18,14 @@ const rootReducer = combineReducers({
   api: apiReducer
 });
 
-const store = createStore(rootReducer, compose(
+const initialState = {
+  session: { isSignedIn: false },
+  api: {
+    domain: 'http://localhost:3001'
+  }
+}
+
+const store = createStore(rootReducer, initialState, compose(
   applyMiddleware(thunk),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 ));
