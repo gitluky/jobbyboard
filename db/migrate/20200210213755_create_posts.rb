@@ -6,7 +6,10 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.datetime :start_datetime
       t.datetime :end_datetime
       t.datetime :expiration_datetime
-      t.string :location
+      t.string :city
+      t.string :state
+      t.float :longitude
+      t.float :latitude
       t.belongs_to :user
       t.boolean :active, default: true
       t.boolean :completed, default: false

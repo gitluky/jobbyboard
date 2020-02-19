@@ -5,12 +5,8 @@ import { Paper, TextField, Button, makeStyles, Grid, Typography } from '@materia
 import useFormInput from '../hooks/useFormInput'
 
 const useStyles = makeStyles(theme => ({
-  paper: {
-    margin: theme.spacing(8),
-    padding: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+  grid: {
+    marginTop: theme.spacing(8)
   },
   form: {
     width: '100%',
@@ -28,9 +24,9 @@ const SearchPosts = () => {
 
   return(
     <>
-      <Paper className={classes.paper}>
+      <Grid container className={classes.grid}>
         <Typography variant="h5" className={classes.title}>
-          SearchPosts Posts
+          Search Posts
         </Typography>
          <form className={classes.form} noValidate>
            <Grid container spacing={2}>
@@ -69,9 +65,9 @@ const SearchPosts = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-          >SearchPosts</Button>
+          >Search Posts</Button>
         </form>
-      </Paper>
+        </Grid>
     </>
   )
 }

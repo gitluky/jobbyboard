@@ -2,6 +2,7 @@ import React from 'react';
 import Navigationbar from './components/Navigationbar';
 import FormContainer from './components/FormContainer';
 import DashBoardContainer from './components/DashBoardContainer';
+import PostContainer from './components/PostContainer';
 
 class App extends React.Component {
 
@@ -10,6 +11,7 @@ class App extends React.Component {
       <div>
         <Navigationbar {...this.props} />
         <FormContainer {...this.props} />
+        <PostContainer />
       </div>
     )
   }

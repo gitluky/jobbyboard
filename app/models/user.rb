@@ -1,5 +1,7 @@
 class User < ApplicationRecord
+  extend Geocoder::Model::ActiveRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :registerable, :recoverable, :rememberable, :validatable, :database_authenticatable, :jwt_authenticatable, jwt_revocation_strategy: self
@@ -7,6 +9,18 @@ class User < ApplicationRecord
   has_many :posts
   has_many :assignments
   has_many :post_applications
+
+  validates :name, presence: true
+  validates :city, presence: true
+  validates :state, presence: true
+
+  geocoded_by :location
+  reverse_geocoded_by :latitude, :longitude
+  after_validation :geocode
+
+  def location
+    [city, state].join(', ')
+  end
 
   def active_posts
     self.posts.where(active: true)

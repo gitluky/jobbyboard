@@ -19,6 +19,8 @@ gem 'devise'
 gem 'devise-jwt'
 gem 'dotenv-rails'
 gem 'faker', '2.10.1'
+gem 'geocoder'
+gem 'fast_jsonapi'
 
 gem 'dry-configurable', '0.9.0'
 

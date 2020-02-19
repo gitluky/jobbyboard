@@ -17,7 +17,7 @@ const FormContainer = () => {
         >
           <Grid item>
             <Route exact path='/sign_in' component={SignIn} />
-            <Route path='/search' component={SearchPosts} />
+            <Route exact path='/' component={SearchPosts} />
           </Grid>
         </Grid>
       </Container>

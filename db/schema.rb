@@ -45,7 +45,10 @@ ActiveRecord::Schema.define(version: 2020_02_16_233856) do
     t.datetime "start_datetime"
     t.datetime "end_datetime"
     t.datetime "expiration_datetime"
-    t.string "location"
+    t.string "city"
+    t.string "state"
+    t.float "longitude"
+    t.float "latitude"
     t.bigint "user_id"
     t.boolean "active", default: true
     t.boolean "completed", default: false
@@ -60,6 +63,10 @@ ActiveRecord::Schema.define(version: 2020_02_16_233856) do
     t.string "name", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.string "city", null: false
+    t.string "state", null: false
+    t.float "longitude"
+    t.float "latitude"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
