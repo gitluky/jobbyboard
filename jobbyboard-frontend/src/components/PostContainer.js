@@ -1,10 +1,11 @@
 import React from 'react';
-import Post from './Post';
+import PostList from './PostList';
 
-const PostContainer = () => {
+
+const PostContainer = ({posts}) => {
   return (
     <div>
-      <Post />
+      <PostList posts={posts}/>
     </div>
   )
 }

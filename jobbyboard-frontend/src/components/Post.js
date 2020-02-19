@@ -1,15 +1,16 @@
 import React from 'react';
 
-const Post = () => {
-  return <div>Post goes here</div>
+const Post = ({post}) => {
+  return(
+    <div>
+      <li>{post.attributes.title}</li>
+      <li>{post.attributes.description}</li>
+      <li>{post.attributes.start_datetime}</li>
+      <li>{post.attributes.end_datetime}</li>
+      <li>{post.attributes.expiration_datetime}</li>
+      <li>{post.attributes.location}</li>
+    </div>
+  )
 }
 
 export default Post;
-
-
-// title
-// description
-// start_datetime
-// end_datetime
-// expiration_datetime
-// location

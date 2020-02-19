@@ -5,7 +5,8 @@ class ApplicationController < ActionController::API
   before_action :authenticate_user!, except: [:index]
 
   def index
-    render json: { isSignedIn: user_signed_in? }
+    posts = Post.near('New York, NY',50)
+    render json: PostSerializer.new(posts), status: 200
   end
 
 end
