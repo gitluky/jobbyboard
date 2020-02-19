@@ -1,29 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Typography, Paper, TextField, Button, makeStyles } from '@material-ui/core';
+import { Typography, Grid, TextField, Button, makeStyles } from '@material-ui/core';
 import { signInUser} from '../actions/sessionsActions'
 
 import useFormInput from '../hooks/useFormInput'
 
-const useStyles = makeStyles(theme => ({
-  paper: {
-    margin: theme.spacing(8),
-    padding: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  form: {
-    width: '100%',
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3,0),
-  },
-}));
-
-const SignIn = ({signInUser, apiDomain, history }) => {
-  const classes = useStyles();
+const SignIn = ({signInUser, apiDomain, history, classes }) => {
   let email = useFormInput('');
   let password = useFormInput('');
 
@@ -35,18 +17,18 @@ const SignIn = ({signInUser, apiDomain, history }) => {
 
   return(
     <>
-      <Paper className={classes.paper}>
-        <Typography variant="h5" className={classes.title}>
-          Sign In
-        </Typography>
-         <form className={classes.form} noValidate onSubmit={handleSubmit} >
+      <Grid container className={classes.grid}>
+        <form className={classes.form} noValidate onSubmit={handleSubmit} >
+         <Typography variant="h5">
+           Sign In
+         </Typography>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Email"
             name="email"
             autoComplete="email"
             autoFocus
@@ -72,7 +54,7 @@ const SignIn = ({signInUser, apiDomain, history }) => {
             className={classes.submit}
           >Sign In</Button>
         </form>
-      </Paper>
+      </Grid>
     </>
   )
 }
