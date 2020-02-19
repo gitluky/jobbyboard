@@ -7,7 +7,7 @@ import SearchPosts from './SearchPosts'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(12,12)
+    padding: theme.spacing(12,12,6)
   },
   grid: {
     padding: theme.spacing(2,12),

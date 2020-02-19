@@ -5,7 +5,9 @@ class ApplicationController < ActionController::API
   before_action :authenticate_user!, except: [:index]
 
   def index
-    posts = Post.near('New York, NY',50)
+    search_location] = 'New York, NY'
+    distance = 25
+    posts = Post.near(search_location, distance)
     render json: PostSerializer.new(posts), status: 200
   end
 

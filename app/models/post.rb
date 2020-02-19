@@ -15,6 +15,10 @@ class Post < ApplicationRecord
     [city, state].join(', ')
   end
 
+  def formatted_created_at
+    created_at.strftime('%B, %d, %Y')
+  end
+
   def self.active_posts
     self.where(active: true)
   end
