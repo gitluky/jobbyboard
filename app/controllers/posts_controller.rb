@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
 
   def index
 
@@ -23,6 +23,11 @@ class PostsController < ApplicationController
 
   def update
 
+  end
+
+  def search
+    posts = Post.find_by_query_params(params[:q], params[:location], params[:distance])
+    render json: PostSerializer.new(posts)
   end
 
   def activate

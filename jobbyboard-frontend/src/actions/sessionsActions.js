@@ -16,6 +16,7 @@ export function signInUser(domain, payload, history) {
     })
     .then(json => {
       dispatch({ type: 'SIGN_IN', payload: json })
+      history.push('/')
     })
     .catch(error => console.log(error));
   };

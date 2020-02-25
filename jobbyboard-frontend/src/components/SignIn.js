@@ -17,7 +17,7 @@ const SignIn = ({signInUser, apiDomain, history, classes }) => {
 
   return(
     <>
-      <Grid container className={classes.grid}>
+      <Grid item xs={12} >
         <form className={classes.form} noValidate onSubmit={handleSubmit} >
          <Typography variant="h5">
            Sign In
@@ -62,7 +62,5 @@ const SignIn = ({signInUser, apiDomain, history, classes }) => {
 const mapStateToProps = (state) => {
   return {apiDomain: state.api.domain};
 }
-
-
 
 export default connect(mapStateToProps, {signInUser})(SignIn);

@@ -23,6 +23,11 @@ class Post < ApplicationRecord
     self.where(active: true)
   end
 
+  def self.find_by_query_params(q, location, distance)
+    posts_by_location = self.near(location, distance)
+    posts_by_location.where("LOWER(posts.title) like LOWER(?) OR LOWER(posts.description) like LOWER(?)", "%#{q}%", "%#{q}%")
+  end
+
   def toggle_status(flag)
     if (flag == 'cancelled' || flag == 'completed') && self.active?
       self.update("#{flag}": !self[flag], active: false)

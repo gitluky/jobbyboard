@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'posts/:id/activate', to: 'posts#activate'
   get 'posts/:id/deactivate', to: 'posts#deactivate'
   get 'posts/:id/cancel', to: 'posts#cancel'
+  get 'search', to: 'posts#search'
 
   get 'users/:id', to: 'users#show'
 

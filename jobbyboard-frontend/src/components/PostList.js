@@ -8,13 +8,14 @@ const PostList = ({posts}) => {
   return(
     <div>
       <Grid container spacing={2} direction="column">
-        <Route exact path="/" render={(...routerProps) => posts.initialPosts ? posts.initialPosts.map(post => <Post post={post}/>) : gettingPosts()} />
+        <Route exact path="/" render={(...routerProps) => posts.initialPosts ? posts.initialPosts.map(post => <Post key={post.id} post={post}/>) : findingPosts()} />
+        <Route path="/search" render={(...routerProps) => posts.searchResults ? posts.searchResults.map(post => <Post key={post.id} post={post}/>) : findingPosts()} />
       </Grid>
     </div>
   )
 }
 
-const gettingPosts = () => {
+const findingPosts = () => {
   return(
     <Grid
     container

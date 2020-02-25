@@ -1,10 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Navigationbar from './components/Navigationbar';
 import FormContainer from './components/FormContainer';
 import DashBoardContainer from './components/DashBoardContainer';
 import PostContainer from './components/PostContainer';
 import { fetchInitialPosts } from './actions/fetchPosts';
-import { connect } from 'react-redux';
+import { fetchSearchResults } from './actions/fetchPosts'
+
 
 class App extends React.Component {
 
@@ -27,4 +29,10 @@ const mapStateToProps = (state) => {
   return { domain: state.api.domain, posts: state.posts }
 }
 
-export default connect(mapStateToProps, { fetchInitialPosts })(App);
+export default connect(
+  mapStateToProps,
+  {
+    fetchInitialPosts,
+    fetchSearchResults
+  }
+  )(App);
