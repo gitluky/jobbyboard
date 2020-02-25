@@ -85,7 +85,7 @@ const Navigationbar = ({ user }) =>  {
           <Typography variant="h5" className={classes.title}>
             Jobbyboard
           </Typography>
-          <Button component={ Link } to="/" style={{ textDecoration: 'none', color: 'inherit'}} >Search</Button>
+          <Button component={ Link } to="/search" style={{ textDecoration: 'none', color: 'inherit'}} >Search</Button>
           <Button component={ Link } to="/sign_in" style={{ textDecoration: 'none', color: 'inherit'}} >Sign In</Button>
         </Toolbar>
       </AppBar>

@@ -11,15 +11,20 @@ import { fetchSearchResults } from './actions/fetchPosts'
 class App extends React.Component {
 
   componentDidMount() {
-    this.props.fetchInitialPosts(this.props.domain);
+    const { domain, fetchSearchResults, fetchInitialPosts, location, location: { search: searchParamsStr} } = this.props;
+    fetchInitialPosts(domain);
+    if (searchParamsStr) {
+      fetchSearchResults(`${domain}/search/${searchParamsStr}`)
+    }
   }
 
   render() {
+
     return(
       <div>
         <Navigationbar {...this.props} />
         <FormContainer {...this.props} />
-        <PostContainer posts={this.props.posts}/>
+        <PostContainer {...this.props}/>
       </div>
     )
   }

@@ -22,7 +22,8 @@ const initialState = {
   session: { isSignedIn: false },
   api: {
     domain: 'http://localhost:3001'
-  }
+  },
+  posts: {}
 }
 
 const store = createStore(rootReducer, initialState, compose(

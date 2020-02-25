@@ -41,7 +41,7 @@ const FormContainer = ({fetchSearchResults, domain}) => {
           className={classes.root}
         >
           <Route exact path='/sign_in' render={(routerProps) => <SignIn {...routerProps} classes={classes}/>}/>
-          <Route exact path='/' render={(routerProps) => <SearchForm {...routerProps} fetchSearchResults={fetchSearchResults} domain={domain} classes={classes}/>}/>
+          <Route exact path={['/search', '/']} render={(routerProps) => <SearchForm {...routerProps} classes={classes}/>}/>
         </Grid>
       </Container>
     </>

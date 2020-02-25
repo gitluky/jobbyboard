@@ -14,7 +14,6 @@ const SearchForm = ({ classes, fetchSearchResults, history, domain }) => {
   const handleOnSubmit = (event) => {
     event.preventDefault();
     history.push(url);
-    fetchSearchResults(`${domain}/${url}`);
   }
 
   useEffect(() => {
