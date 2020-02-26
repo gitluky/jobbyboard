@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Navigationbar from './components/Navigationbar';
 import FormContainer from './components/FormContainer';
-import DashBoardContainer from './components/DashBoardContainer';
 import PostContainer from './components/PostContainer';
 import { fetchInitialPosts } from './actions/fetchPosts';
 import { fetchSearchResults } from './actions/fetchPosts'
@@ -11,7 +10,7 @@ import { fetchSearchResults } from './actions/fetchPosts'
 class App extends React.Component {
 
   componentDidMount() {
-    const { domain, fetchSearchResults, fetchInitialPosts, location, location: { search: searchParamsStr} } = this.props;
+    const { domain, fetchSearchResults, fetchInitialPosts, location: { search: searchParamsStr} } = this.props;
     fetchInitialPosts(domain);
     if (searchParamsStr) {
       fetchSearchResults(`${domain}/search/${searchParamsStr}`)

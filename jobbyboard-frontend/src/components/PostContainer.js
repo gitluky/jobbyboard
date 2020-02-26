@@ -1,6 +1,6 @@
 import React from 'react';
 import PostList from './PostList';
-import { Container, Grid, makeStyles } from '@material-ui/core';
+import { Container, makeStyles } from '@material-ui/core';
 import { Route } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({

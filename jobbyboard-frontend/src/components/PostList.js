@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { Route } from 'react-router-dom';
+import React from 'react';
 import Post from './Post';
 
 import { Grid,  Typography } from '@material-ui/core';

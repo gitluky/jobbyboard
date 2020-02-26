@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { TextField, Button, makeStyles, Grid, Typography, MenuItem, FormControl } from '@material-ui/core';
-import Select from '@material-ui/core/Select';
+import { TextField, Button, Grid, Typography, MenuItem } from '@material-ui/core';
 
 import useFormInput from '../hooks/useFormInput'
 
@@ -17,7 +15,7 @@ const SearchForm = ({ classes, fetchSearchResults, history, domain }) => {
   }
 
   useEffect(() => {
-    setUrl(`/search?q=${q.value}&location=${location.value}&distance=${distance.value}`)
+    setUrl(`/search?${q.value ? 'q=' + q.value : ''}&location=${location.value}&distance=${distance.value}`)
   }, [q, location, distance]);
 
   return(

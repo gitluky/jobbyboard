@@ -21,11 +21,3 @@ export function signInUser(domain, payload, history) {
     .catch(error => console.log(error));
   };
 };
-
-function signOutUser() {
-
-}
-
-function signUpUser() {
-
-}
