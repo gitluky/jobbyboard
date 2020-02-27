@@ -25,7 +25,6 @@ class Post < ApplicationRecord
 
   def self.find_by_query_params(q, location, distance)
     posts_by_location = self.near(location, distance)
-    binding.pry
     q != '' ? posts_by_location.where("LOWER(posts.title) like LOWER(?) OR LOWER(posts.description) like LOWER(?)", "%#{q}%", "%#{q}%") : posts_by_location
   end
 

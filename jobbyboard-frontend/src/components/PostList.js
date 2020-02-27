@@ -18,6 +18,9 @@ const PostList = ({posts, requesting}) => {
   return(
     <div>
       <Grid container spacing={2} direction="column">
+        <Typography variant="h6">
+           Number of Posts: { posts ? posts.length : '' }
+        </Typography>
         { posts ? posts.map(post => <Post key={post.id} post={post}/>) : postMessage()}
       </Grid>
     </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
-import { makeStyles, AppBar, Toolbar, Typography, Button, IconButton, MenuItem, ClickAwayListener, Paper, Popper, MenuList } from '@material-ui/core';
+import { makeStyles, AppBar, Toolbar, Typography, Button, IconButton, MenuItem, ClickAwayListener, Paper, Popper, MenuList, Icon } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
 

@@ -10,11 +10,12 @@ import { fetchSearchResults } from './actions/fetchPosts'
 class App extends React.Component {
 
   componentDidMount() {
-    const { domain, fetchSearchResults, fetchInitialPosts, location: { search: searchParamsStr} } = this.props;
+    const { domain, fetchInitialPosts } = this.props;
     fetchInitialPosts(domain);
-    if (searchParamsStr) {
-      fetchSearchResults(`${domain}/search/${searchParamsStr}`)
-    }
+    const iconLink = document.createElement('link');
+    iconLink.setAttribute('rel', 'stylesheet');
+    iconLink.setAttribute('href', 'https://fonts.googleapis.com/icon?family=Material+Icons')
+    document.getElementsByTagName('head')[0].appendChild(iconLink);
   }
 
   render() {

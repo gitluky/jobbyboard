@@ -1,9 +1,10 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
-import { Container, Grid, makeStyles } from '@material-ui/core';
+import { Route, Link } from 'react-router-dom';
+import { Container, Grid, makeStyles, Button, Icon } from '@material-ui/core';
 
 import SignIn from './SignIn';
 import SearchForm from './SearchForm'
+import PostForm from './PostForm'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const FormContainer = ({fetchSearchResults, domain}) => {
+const FormContainer = ({ fetchSearchResults, domain }) => {
   const classes = useStyles();
   return (
     <>
@@ -40,8 +41,10 @@ const FormContainer = ({fetchSearchResults, domain}) => {
           alignItems="center"
           className={classes.root}
         >
+          <Button component={ Link } to="/posts/new" style={{ textDecoration: 'none', color: 'inherit'}} ><Icon color="primary" style={{ fontSize: 30, marginRight: '.25em' }}>add_circle</Icon>Create Post</Button>
           <Route exact path='/sign_in' render={(routerProps) => <SignIn {...routerProps} classes={classes}/>}/>
-          <Route exact path={['/search', '/']} render={(routerProps) => <SearchForm {...routerProps} classes={classes}/>}/>
+          <Route exact path={['/search', '/']} render={(routerProps) => <SearchForm {...routerProps} domain={domain} fetchSearchResults={fetchSearchResults} classes={classes}/>}/>
+          <Route exact path='/posts/new' render={(routerProps) => <PostForm {...routerProps} domain={domain} classes={classes}/>}/>
         </Grid>
       </Container>
     </>

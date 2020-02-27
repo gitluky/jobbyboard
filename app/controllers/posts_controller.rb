@@ -26,7 +26,6 @@ class PostsController < ApplicationController
   end
 
   def search
-    binding.pry
     posts = Post.find_by_query_params(params[:q], params[:location], params[:distance])
     render json: PostSerializer.new(posts)
   end

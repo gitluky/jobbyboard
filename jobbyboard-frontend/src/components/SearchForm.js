@@ -3,19 +3,31 @@ import { TextField, Button, Grid, Typography, MenuItem } from '@material-ui/core
 
 import useFormInput from '../hooks/useFormInput'
 
-const SearchForm = ({ classes, fetchSearchResults, history, domain }) => {
+const SearchForm = ({ classes, fetchSearchResults, history, location, domain }) => {
   let q = useFormInput('');
-  let location = useFormInput('');
-  let distance = useFormInput('');
-  let [url, setUrl] = useState('')
+  let searchLocation = useFormInput('');
+  let distance = useFormInput(50);
+  let [url, setUrl] = useState('');
+
+  let [path, setPath] = useState(location.pathname)
+  let [searchStr, setSearchStr] = useState(location.search)
+
+  useEffect(() => {
+    fetchSearchResults(`${domain}${path}/${searchStr}`)
+  },[searchStr])
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
-    history.push(url);
+    history.push(`${url}`)
+    fetchSearchResults(`${domain}${url}`)
+  }
+
+  const formatParams = (q, searchLocation, distance) => {
+    return[`${q.value ? 'q=' + q.value : ''}`, `${searchLocation.value ? 'location=' + searchLocation.value : ''}`,`${distance.value ? 'distance=' + distance.value : ''}`].filter(Boolean).join('&')
   }
 
   useEffect(() => {
-    setUrl(`/search?${q.value ? 'q=' + q.value : ''}&location=${location.value}&distance=${distance.value}`)
+    setUrl(`/search?${formatParams(q,location,distance)}`)
   }, [q, location, distance]);
 
   return(
@@ -53,7 +65,7 @@ const SearchForm = ({ classes, fetchSearchResults, history, domain }) => {
              type="text"
              id="location"
              autoComplete="current-password"
-             {...location}
+             {...searchLocation}
              />
            </Grid>
            <Grid item xs={2} >
