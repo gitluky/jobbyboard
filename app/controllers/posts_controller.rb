@@ -1,8 +1,10 @@
 class PostsController < ApplicationController
-  # before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:index, :create]
 
   def index
-
+    binding.pry
+    posts = current_user.posts
+    render json: PostSerializer.new(posts)
   end
 
   def show
@@ -14,7 +16,8 @@ class PostsController < ApplicationController
   end
 
   def create
-
+    current_user.posts.create(post_params)
+    render json: PostSerializer.new(post), status: 200
   end
 
   def edit
@@ -45,7 +48,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-
+    params.require(:post).permit(:user_id, :title, :description, :city, :state)
   end
 
 end

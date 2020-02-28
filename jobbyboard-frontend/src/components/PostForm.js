@@ -3,7 +3,7 @@ import { TextField, Button, Grid, Typography, MenuItem } from '@material-ui/core
 
 import useFormInput from '../hooks/useFormInput'
 
-const PostForm = ({ classes, history, domain }) => {
+const PostForm = ({ classes, history, domain, session }) => {
   let title = useFormInput('');
   let description = useFormInput('');
   let city = useFormInput('');
@@ -11,7 +11,21 @@ const PostForm = ({ classes, history, domain }) => {
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
-    console.log('Creating post...')
+    const postData = { post: { title: title.value, description: description.value, city: city.value, state: state.value } }
+    fetch(`${domain}/posts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': `${session.jwt}`
+      },
+      body: JSON.stringify(postData)
+    })
+    .then(resp => resp.json())
+    .then(json => {
+      console.log(json)
+      history.push('/')
+    })
   }
 
   return(
@@ -20,7 +34,7 @@ const PostForm = ({ classes, history, domain }) => {
        <form className={classes.form} noValidate onSubmit={handleOnSubmit}>
          <Grid container spacing={2} >
            <Typography variant="h5">
-             Search Posts
+             New Post
            </Typography>
          </Grid>
          <Grid container spacing={1} >

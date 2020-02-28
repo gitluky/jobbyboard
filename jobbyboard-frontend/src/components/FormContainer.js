@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const FormContainer = ({ fetchSearchResults, domain }) => {
+const FormContainer = ({ fetchSearchResults, domain, session }) => {
   const classes = useStyles();
   return (
     <>
@@ -44,7 +44,7 @@ const FormContainer = ({ fetchSearchResults, domain }) => {
           <Button component={ Link } to="/posts/new" style={{ textDecoration: 'none', color: 'inherit'}} ><Icon color="primary" style={{ fontSize: 30, marginRight: '.25em' }}>add_circle</Icon>Create Post</Button>
           <Route exact path='/sign_in' render={(routerProps) => <SignIn {...routerProps} classes={classes}/>}/>
           <Route exact path={['/search', '/']} render={(routerProps) => <SearchForm {...routerProps} domain={domain} fetchSearchResults={fetchSearchResults} classes={classes}/>}/>
-          <Route exact path='/posts/new' render={(routerProps) => <PostForm {...routerProps} domain={domain} classes={classes}/>}/>
+          <Route exact path='/posts/new' render={(routerProps) => <PostForm {...routerProps} session={session} domain={domain} classes={classes}/>}/>
         </Grid>
       </Container>
     </>

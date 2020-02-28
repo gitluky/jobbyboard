@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 import Navigationbar from './components/Navigationbar';
 import FormContainer from './components/FormContainer';
 import PostContainer from './components/PostContainer';
-import { fetchInitialPosts } from './actions/fetchPosts';
-import { fetchSearchResults } from './actions/fetchPosts'
-
+import { fetchInitialPosts, fetchSearchResults, fetchUserPosts } from './actions/fetchPosts';
 
 class App extends React.Component {
 
@@ -31,13 +29,14 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return { domain: state.api.domain, posts: state.posts }
+  return { domain: state.api.domain, posts: state.posts, session: state.session }
 }
 
 export default connect(
   mapStateToProps,
   {
     fetchInitialPosts,
-    fetchSearchResults
+    fetchSearchResults,
+    fetchUserPosts
   }
   )(App);
