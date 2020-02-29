@@ -1,37 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Navigationbar from './components/Navigationbar';
 import FormContainer from './components/FormContainer';
 import PostContainer from './components/PostContainer';
 import { fetchInitialPosts, fetchSearchResults, fetchUserPosts } from './actions/fetchPosts';
-import { trySessionRefresh } from './actions/sessionsActions';
+import { trySessionRefresh, signOut } from './actions/sessionsActions';
 
-class App extends React.Component {
+const App = (props) => {
 
-  appendGoogleIconLink () {
+  const { domain, session, fetchInitialPosts, trySessionRefresh, history } = props;
+
+  const appendGoogleIconLink = () => {
     const iconLink = document.createElement('link');
     iconLink.setAttribute('rel', 'stylesheet');
     iconLink.setAttribute('href', 'https://fonts.googleapis.com/icon?family=Material+Icons')
     document.getElementsByTagName('head')[0].appendChild(iconLink);
   }
 
-  componentDidMount() {
-    const { domain, fetchInitialPosts, trySessionRefresh, history } = this.props;
-    this.appendGoogleIconLink();
-    trySessionRefresh(domain, history);
+  useEffect(() => {
+    appendGoogleIconLink();
     fetchInitialPosts(domain);
-  }
+  }, [])
 
-  render() {
+  useEffect(() => {
+    trySessionRefresh(domain, history);
+    let token_refresh_timer = setTimeout(() => {
+      trySessionRefresh(domain, history);
+    }, 900000)
+    return () => clearTimeout(token_refresh_timer)
+  }, [])
 
-    return(
-      <div>
-        <Navigationbar {...this.props} />
-        <FormContainer {...this.props} />
-        <PostContainer {...this.props}/>
-      </div>
-    )
-  }
+
+  return(
+    <div>
+      <Navigationbar {...props} />
+      <FormContainer {...props} />
+      <PostContainer {...props}/>
+    </div>
+  )
 }
 
 const mapStateToProps = (state) => {
@@ -44,6 +50,7 @@ export default connect(
     fetchInitialPosts,
     fetchSearchResults,
     fetchUserPosts,
-    trySessionRefresh
+    trySessionRefresh,
+    signOut
   }
   )(App);

@@ -44,3 +44,23 @@ export function trySessionRefresh(domain, history) {
     .catch(error => console.log(error));
   };
 };
+
+export function signOut(domain, {jwt}, { history }) {
+  return (dispatch) => {
+    fetch(`${domain}/users/sign_out`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': `${jwt}`
+      },
+      credentials: 'include'
+    })
+    .then(resp => resp.json())
+    .then(json => {
+      dispatch({ type: 'SIGN_OUT', payload: json })
+      history.push('/')
+    })
+    .catch(error => console.log(error));
+  };
+};

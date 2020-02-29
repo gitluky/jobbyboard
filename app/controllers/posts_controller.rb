@@ -2,7 +2,6 @@ class PostsController < ApplicationController
   before_action :authenticate_user!, only: [:index, :create]
 
   def index
-    binding.pry
     posts = current_user.posts
     render json: PostSerializer.new(posts)
   end

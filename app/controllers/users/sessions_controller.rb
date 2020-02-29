@@ -12,12 +12,14 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
+    session = { isSignedIn: false, failedRefresh: false }
     self.resource = warden.authenticate!(auth_options)
     if sign_in(resource_name, resource)
       generate_refresh_token
+      session = { id: resource.id, name: resource.name, isSignedIn: true, failedRefresh: false }
     end
     # yield resource if block_given?
-    respond_with resource
+    respond_with session
   end
 
   # DELETE /resource/sign_out
@@ -33,20 +35,17 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   def refresh_session
+    session = { isSignedIn: false, failedRefresh: true }
     if !!cookies.signed[:rt]
       refresh_token = JWT.decode(cookies.signed[:rt], ENV['DEVISE_JWT_SECRET_KEY'], 'HS256')[0]
-      if refresh_token['exp'] > Time.now.to_i
-        self.resource = User.find_by(id: refresh_token['id'] )
-        if resource.rti == refresh_token['rti'] && resource.jti == refresh_token['jti']
-          if sign_in(resource_name, resource)
-            generate_refresh_token
-          end
-        end
+      resource = User.find_by(id: refresh_token['id'] )
+      if refresh_token['exp'] > Time.now.to_i && resource.rti == refresh_token['rti'] && resource.jti == refresh_token['jti']
+        sign_in(resource_name, resource)
+        generate_refresh_token
+        session = { id: resource.id, name: resource.name, isSignedIn: true, failedRefresh: false }
       end
-    else
-      self.resource == { loginRequired: true }
     end
-    respond_with resource
+    respond_with session
   end
 
   private
@@ -63,7 +62,7 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def respond_to_on_destroy
-    head :no_content
+    render json: { isSignedIn: false, failedLogin: false }
   end
 
 end

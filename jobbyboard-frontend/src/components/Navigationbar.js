@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Route, NavLink, Link } from 'react-router-dom';
 
 import { makeStyles, AppBar, Toolbar, Typography, Button, IconButton, MenuItem, ClickAwayListener, Paper, Popper, MenuList, Icon } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -18,10 +18,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Navigationbar = ({ user }) =>  {
+const Navigationbar = ({ domain, session, signOut, history }) =>  {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef(null);
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef(null);
 
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen);
@@ -42,9 +42,14 @@ const Navigationbar = ({ user }) =>  {
     }
   }
 
+  function handleSignOut(event) {
+    event.preventDefault();
+    signOut(domain, session, history);
+  }
+
   // return focus to the button when we transitioned from !open -> open
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
+  const prevOpen = useRef(open);
+  useEffect(() => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
     }
@@ -85,7 +90,8 @@ const Navigationbar = ({ user }) =>  {
             Jobbyboard
           </Typography>
           <Button component={ Link } to="/search" style={{ textDecoration: 'none', color: 'inherit'}} >Search</Button>
-          <Button component={ Link } to="/sign_in" style={{ textDecoration: 'none', color: 'inherit'}} >Sign In</Button>
+          { session.isSignedIn ? <Button onClick={handleSignOut} style={{ textDecoration: 'none', color: 'inherit'}} >Sign Out</Button> :
+          <Button component={ Link } to="/sign_in" style={{ textDecoration: 'none', color: 'inherit'}} >Sign In</Button>}
         </Toolbar>
       </AppBar>
     </div>

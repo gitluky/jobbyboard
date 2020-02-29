@@ -19,7 +19,10 @@ const rootReducer = combineReducers({
 });
 
 const initialState = {
-  session: { isSignedIn: false },
+  session: {
+    isSignedIn: false,
+    failedRefresh: false
+   },
   api: {
     domain: 'http://localhost:3001'
   },
