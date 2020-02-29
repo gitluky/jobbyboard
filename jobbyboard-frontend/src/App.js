@@ -4,16 +4,22 @@ import Navigationbar from './components/Navigationbar';
 import FormContainer from './components/FormContainer';
 import PostContainer from './components/PostContainer';
 import { fetchInitialPosts, fetchSearchResults, fetchUserPosts } from './actions/fetchPosts';
+import { trySessionRefresh } from './actions/sessionsActions';
 
 class App extends React.Component {
 
-  componentDidMount() {
-    const { domain, fetchInitialPosts } = this.props;
-    fetchInitialPosts(domain);
+  appendGoogleIconLink () {
     const iconLink = document.createElement('link');
     iconLink.setAttribute('rel', 'stylesheet');
     iconLink.setAttribute('href', 'https://fonts.googleapis.com/icon?family=Material+Icons')
     document.getElementsByTagName('head')[0].appendChild(iconLink);
+  }
+
+  componentDidMount() {
+    const { domain, fetchInitialPosts, trySessionRefresh, history } = this.props;
+    this.appendGoogleIconLink();
+    trySessionRefresh(domain, history);
+    fetchInitialPosts(domain);
   }
 
   render() {
@@ -37,6 +43,7 @@ export default connect(
   {
     fetchInitialPosts,
     fetchSearchResults,
-    fetchUserPosts
+    fetchUserPosts,
+    trySessionRefresh
   }
   )(App);

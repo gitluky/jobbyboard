@@ -9,11 +9,17 @@ Rails.application.routes.draw do
   get 'posts/:id/cancel', to: 'posts#cancel'
   get 'search', to: 'posts#search'
 
-  get 'users/:id', to: 'users#show'
+
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
+
+  devise_scope :user do
+    get 'refresh_session', to: 'users/sessions#refresh_session'
+  end
+
+  get 'users/:id', to: 'users#show'
 
 end
