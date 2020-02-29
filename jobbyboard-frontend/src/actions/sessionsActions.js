@@ -6,10 +6,11 @@ export function signInUser(domain, payload, history) {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
-      // credentials: 'include',
-      body: JSON.stringify({ user: payload })
+      credentials: 'include',
+      body: JSON.stringify({ user: payload }),
     })
     .then(resp => {
+      debugger;
       const jwt = resp.headers.get('Authorization');
       dispatch({ type: 'GET_TOKEN', payload: jwt });
       return resp.json()

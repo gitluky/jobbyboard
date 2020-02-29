@@ -13,7 +13,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     resource '*',
       headers: :any,
       methods: :any,
-      expose: ['Authorization']
-      # credentials: true
+      expose: ['Authorization'],
+      credentials: true
   end
 end
