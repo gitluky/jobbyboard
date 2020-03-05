@@ -25,6 +25,7 @@ gem 'fast_jsonapi'
 gem 'dry-configurable', '0.9.0'
 
 # Use Active Storage variant
+gem 'mini_magick'
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb

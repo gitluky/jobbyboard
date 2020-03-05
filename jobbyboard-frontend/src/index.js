@@ -24,7 +24,7 @@ const initialState = {
     failedRefresh: false
    },
   api: {
-    domain: 'http://localhost:3001'
+    domain: 'https://localhost:3001'
   },
   posts: {}
 }

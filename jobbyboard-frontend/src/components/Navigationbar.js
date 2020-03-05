@@ -90,8 +90,13 @@ const Navigationbar = ({ domain, session, signOut, history }) =>  {
             Jobbyboard
           </Typography>
           <Button component={ Link } to="/search" style={{ textDecoration: 'none', color: 'inherit'}} >Search</Button>
-          { session.isSignedIn ? <Button onClick={handleSignOut} style={{ textDecoration: 'none', color: 'inherit'}} >Sign Out</Button> :
-          <Button component={ Link } to="/sign_in" style={{ textDecoration: 'none', color: 'inherit'}} >Sign In</Button>}
+          { session.isSignedIn ?
+            <Button onClick={handleSignOut} style={{ textDecoration: 'none', color: 'inherit'}} >Sign Out</Button> :
+            <>
+              <Button component={ Link } to="/sign_in" style={{ textDecoration: 'none', color: 'inherit'}} >Sign In</Button>
+              <Button component={ Link } to="/sign_up" style={{ textDecoration: 'none', color: 'inherit'}} >Sign Up</Button>
+            </>
+          }
         </Toolbar>
       </AppBar>
     </div>

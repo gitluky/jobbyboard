@@ -6,6 +6,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :registerable, :recoverable, :rememberable, :validatable, :database_authenticatable, :jwt_authenticatable, jwt_revocation_strategy: self
 
+  has_one_attached :avatar
+
   has_many :posts
   has_many :assignments
   has_many :post_applications

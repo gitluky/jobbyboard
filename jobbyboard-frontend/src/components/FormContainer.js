@@ -3,6 +3,7 @@ import { Route, Link } from 'react-router-dom';
 import { Container, Grid, makeStyles, Button, Icon } from '@material-ui/core';
 
 import SignIn from './SignIn';
+import SignUp from './SignUp';
 import SearchForm from './SearchForm'
 import PostForm from './PostForm'
 
@@ -43,6 +44,7 @@ const FormContainer = ({ fetchSearchResults, domain, session }) => {
         >
           <Button component={ Link } to="/posts/new" style={{ textDecoration: 'none', color: 'inherit'}} ><Icon color="primary" style={{ fontSize: 30, marginRight: '.25em' }}>add_circle</Icon>Create Post</Button>
           <Route exact path='/sign_in' render={(routerProps) => <SignIn {...routerProps} classes={classes}/>}/>
+          <Route exact path='/sign_up' render={(routerProps) => <SignUp {...routerProps} classes={classes}/>}/>
           <Route exact path={['/search', '/']} render={(routerProps) => <SearchForm {...routerProps} domain={domain} fetchSearchResults={fetchSearchResults} classes={classes}/>}/>
           <Route exact path='/posts/new' render={(routerProps) => <PostForm {...routerProps} session={session} domain={domain} classes={classes}/>}/>
         </Grid>
