@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Route, NavLink, Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
-import { makeStyles, AppBar, Toolbar, Typography, Button, IconButton, MenuItem, ClickAwayListener, Paper, Popper, MenuList, Icon } from '@material-ui/core';
+import { makeStyles, AppBar, Toolbar, Typography, Button, IconButton, MenuItem, ClickAwayListener, Paper, Popper, MenuList } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
 
@@ -78,9 +78,17 @@ const Navigationbar = ({ domain, session, signOut, history }) =>  {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={handleClose} component={NavLink} to="/dashboard" style={{ textDecoration: 'none', color: 'default' }} activeClassName="active" >Dashboard</MenuItem>
-                    <MenuItem onClick={handleClose} component={NavLink} to="/users/:id" style={{ textDecoration: 'none', color: 'default' }} activeClassName="active" >My Profile</MenuItem>
-                    <MenuItem onClick={handleClose} component={NavLink} to="/users/:id/activity" style={{ textDecoration: 'none', color: 'default' }} activeClassName="active" >Activity</MenuItem>
+                    {session.id ?
+                      <div>
+                        <MenuItem onClick={handleClose} component={NavLink} to={`/users/${session.id}`} style={{ textDecoration: 'none', color: 'default' }} activeClassName="active" >My Profile</MenuItem>
+                        <MenuItem onClick={handleSignOut} style={{ textDecoration: 'none', color: 'inherit'}} >Sign Out</MenuItem>
+                      </div>
+                     :
+                     <div>
+                       <MenuItem component={ Link } to="/sign_in" style={{ textDecoration: 'none', color: 'inherit'}} >Sign In</MenuItem>
+                       <MenuItem component={ Link } to="/sign_up" style={{ textDecoration: 'none', color: 'inherit'}} >Sign Up</MenuItem>
+                     </div>
+                    }
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
@@ -90,13 +98,6 @@ const Navigationbar = ({ domain, session, signOut, history }) =>  {
             Jobbyboard
           </Typography>
           <Button component={ Link } to="/search" style={{ textDecoration: 'none', color: 'inherit'}} >Search</Button>
-          { session.isSignedIn ?
-            <Button onClick={handleSignOut} style={{ textDecoration: 'none', color: 'inherit'}} >Sign Out</Button> :
-            <>
-              <Button component={ Link } to="/sign_in" style={{ textDecoration: 'none', color: 'inherit'}} >Sign In</Button>
-              <Button component={ Link } to="/sign_up" style={{ textDecoration: 'none', color: 'inherit'}} >Sign Up</Button>
-            </>
-          }
         </Toolbar>
       </AppBar>
     </div>

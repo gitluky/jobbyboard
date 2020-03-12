@@ -1,25 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom'
+import { Button, Icon, Grid } from '@material-ui/core';
 import Navigationbar from './components/Navigationbar';
 import FormContainer from './components/FormContainer';
 import PostContainer from './components/PostContainer';
-import { fetchInitialPosts, fetchSearchResults, fetchUserPosts } from './actions/fetchPosts';
+import { fetchInitialPosts, fetchSearchResults } from './actions/fetchPosts';
+import { fetchUserData  } from './actions/fetchUsers';
 import { trySessionRefresh, signOut } from './actions/sessionsActions';
 
 const App = (props) => {
 
-  const { domain, session, fetchInitialPosts, trySessionRefresh, history } = props;
-
-  const appendGoogleIconLink = () => {
-    const iconLink = document.createElement('link');
-    iconLink.setAttribute('rel', 'stylesheet');
-    iconLink.setAttribute('href', 'https://fonts.googleapis.com/icon?family=Material+Icons')
-    document.getElementsByTagName('head')[0].appendChild(iconLink);
-  }
+  const { location, domain, history, fetchInitialPosts, trySessionRefresh } = props;
 
   useEffect(() => {
+    const appendGoogleIconLink = () => {
+      const iconLink = document.createElement('link');
+      iconLink.setAttribute('rel', 'stylesheet');
+      iconLink.setAttribute('href', 'https://fonts.googleapis.com/icon?family=Material+Icons')
+      document.getElementsByTagName('head')[0].appendChild(iconLink);
+    }
+
     appendGoogleIconLink();
-    fetchInitialPosts(domain);
+  },[])
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      fetchInitialPosts(domain);
+    }
   }, [])
 
   useEffect(() => {
@@ -34,6 +42,9 @@ const App = (props) => {
   return(
     <div>
       <Navigationbar {...props} />
+      <Grid container justify="center">
+        <Button component={ Link } to="/posts/new" style={{ marginTop: '5em', textDecoration: 'none', color: 'inherit'}} ><Icon color="primary" style={{ fontSize: 30, marginRight: '.25em' }}>add_circle</Icon>Create Post</Button>
+      </Grid>
       <FormContainer {...props} />
       <PostContainer {...props}/>
     </div>
@@ -41,7 +52,7 @@ const App = (props) => {
 }
 
 const mapStateToProps = (state) => {
-  return { domain: state.api.domain, posts: state.posts, session: state.session }
+  return { domain: state.api.domain, posts: state.posts, session: state.session, users: state.users }
 }
 
 export default connect(
@@ -49,7 +60,7 @@ export default connect(
   {
     fetchInitialPosts,
     fetchSearchResults,
-    fetchUserPosts,
+    fetchUserData,
     trySessionRefresh,
     signOut
   }

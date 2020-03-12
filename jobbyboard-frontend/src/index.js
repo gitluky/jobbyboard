@@ -11,11 +11,13 @@ import thunk from 'redux-thunk';
 import sessionsReducer from './reducers/sessionsReducer';
 import postsReducer from './reducers/postsReducer';
 import apiReducer from './reducers/apiReducer';
+import usersReducer from './reducers/usersReducer';
 
 const rootReducer = combineReducers({
   session: sessionsReducer,
   posts: postsReducer,
-  api: apiReducer
+  api: apiReducer,
+  users: usersReducer
 });
 
 const initialState = {
@@ -26,7 +28,7 @@ const initialState = {
   api: {
     domain: 'https://localhost:3001'
   },
-  posts: {}
+  posts: {requesting: false}
 }
 
 const store = createStore(rootReducer, initialState, compose(

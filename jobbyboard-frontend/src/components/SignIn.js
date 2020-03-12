@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Typography, Grid, TextField, Button } from '@material-ui/core';
-import { signInUser} from '../actions/sessionsActions'
+import { signInUser} from '../actions/sessionsActions';
 
-import useFormInput from '../hooks/useFormInput'
+import useFormInput from '../hooks/useFormInput';
 
 const SignIn = ({signInUser, apiDomain, history, classes }) => {
   let email = useFormInput('');

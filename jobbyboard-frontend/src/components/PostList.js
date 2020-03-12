@@ -4,7 +4,6 @@ import Post from './Post';
 import { Grid,  Typography } from '@material-ui/core';
 
 const PostList = ({posts, requesting}) => {
-
   const postMessage = () => {
     return(
       <Grid container justify="center" alignItems="center">

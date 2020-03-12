@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :get_user, only: [:show]
 
   def show
-    render json: @user
+    render json: UserSerializer.new(@user)
   end
 
   private

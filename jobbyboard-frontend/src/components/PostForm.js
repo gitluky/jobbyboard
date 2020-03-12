@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { TextField, Button, Grid, Typography, MenuItem } from '@material-ui/core';
+import React from 'react';
+import { TextField, Button, Grid, Typography } from '@material-ui/core';
 
 import useFormInput from '../hooks/useFormInput'
 
@@ -56,7 +56,6 @@ const PostForm = ({ classes, history, domain, session }) => {
              required
              fullWidth
              multiline
-             rows="4"
              id="description"
              label="Description"
              name="description"

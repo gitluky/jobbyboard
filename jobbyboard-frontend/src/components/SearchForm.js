@@ -3,18 +3,17 @@ import { TextField, Button, Grid, Typography, MenuItem } from '@material-ui/core
 
 import useFormInput from '../hooks/useFormInput'
 
-const SearchForm = ({ classes, fetchSearchResults, history, location, domain }) => {
-  let q = useFormInput('');
-  let searchLocation = useFormInput('');
-  let distance = useFormInput(50);
-  let [url, setUrl] = useState('');
+const SearchForm = ({ classes, fetchSearchResults, history, location, domain, match }) => {
+  const q = useFormInput('');
+  const searchLocation = useFormInput('');
+  const distance = useFormInput(50);
+  const [url, setUrl] = useState('');
 
-  let [path, setPath] = useState(location.pathname)
-  let [searchStr, setSearchStr] = useState(location.search)
-
-  useEffect(() => {
-    fetchSearchResults(`${domain}${path}/${searchStr}`)
-  },[searchStr])
+  // useEffect(() => {
+  //   if (location.pathname === "/search" && location.search !== "") {
+  //     fetchSearchResults(`${domain}${location.pathname}/${location.search}`)
+  //   }
+  // },[])
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
@@ -22,13 +21,12 @@ const SearchForm = ({ classes, fetchSearchResults, history, location, domain }) 
     fetchSearchResults(`${domain}${url}`)
   }
 
-  const formatParams = (q, searchLocation, distance) => {
-    return[`${q.value ? 'q=' + q.value : ''}`, `${searchLocation.value ? 'location=' + searchLocation.value : ''}`,`${distance.value ? 'distance=' + distance.value : ''}`].filter(Boolean).join('&')
-  }
-
   useEffect(() => {
-    setUrl(`/search?${formatParams(q,location,distance)}`)
-  }, [q, location, distance]);
+    const formatParams = (q, searchLocation, distance) => {
+      return[`${q.value ? 'q=' + q.value : ''}`, `${searchLocation.value ? 'location=' + searchLocation.value : ''}`, `${distance.value ? 'distance=' + distance.value : ''}`].filter(Boolean).join('&')
+    }
+    setUrl(`/search?${formatParams(q,searchLocation,distance)}`)
+  }, [q, searchLocation, distance]);
 
   return(
     <>

@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   extend Geocoder::Model::ActiveRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
-
+  include Rails.application.routes.url_helpers
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :registerable, :recoverable, :rememberable, :validatable, :database_authenticatable, :jwt_authenticatable, jwt_revocation_strategy: self
@@ -24,8 +24,16 @@ class User < ApplicationRecord
     [city, state].join(', ')
   end
 
+  def avatar_url
+    rails_blob_path(self.avatar)
+  end
+
   def active_posts
     self.posts.where(active: true)
+  end
+
+  def inactive_posts
+    self.posts.where(active: false)
   end
 
   def currently_assigned_posts
