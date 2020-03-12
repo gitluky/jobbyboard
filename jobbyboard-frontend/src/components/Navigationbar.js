@@ -95,7 +95,7 @@ const Navigationbar = ({ domain, session, signOut, history }) =>  {
             </Popper>
 
           <Typography variant="h5" className={classes.title}>
-            Jobbyboard
+            <Link to="/" style={{ textDecoration: 'none', color: 'inherit'}} >Jobbyboard</Link>
           </Typography>
           <Button component={ Link } to="/search" style={{ textDecoration: 'none', color: 'inherit'}} >Search</Button>
         </Toolbar>

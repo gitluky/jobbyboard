@@ -20,7 +20,6 @@ const App = (props) => {
       iconLink.setAttribute('href', 'https://fonts.googleapis.com/icon?family=Material+Icons')
       document.getElementsByTagName('head')[0].appendChild(iconLink);
     }
-
     appendGoogleIconLink();
   },[])
 

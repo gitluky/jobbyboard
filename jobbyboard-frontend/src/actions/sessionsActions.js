@@ -39,7 +39,6 @@ export function trySessionRefresh(domain, history) {
     })
     .then(json => {
       dispatch({ type: 'SIGN_IN', payload: json })
-      history.push('/')
     })
     .catch(error => console.log(error));
   };

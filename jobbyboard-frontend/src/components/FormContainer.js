@@ -4,8 +4,9 @@ import { Container, Grid, makeStyles } from '@material-ui/core';
 
 import SignIn from './SignIn';
 import SignUp from './SignUp';
-import SearchForm from './SearchForm'
-import PostForm from './PostForm'
+import SearchForm from './SearchForm';
+import PostForm from './PostForm';
+import UserCard from './UserCard';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,6 +21,14 @@ const useStyles = makeStyles(theme => ({
       padding: theme.spacing(6,32),
     }
   },
+  avatarSmall: {
+    width: theme.spacing(7),
+    height: theme.spacing(7)
+  },
+  avatarLarge: {
+    width:theme.spacing(18),
+    height: theme.spacing(18)
+  },
   grid: {
     padding: theme.spacing(2),
   },
@@ -31,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const FormContainer = ({ fetchSearchResults, domain, session }) => {
+const FormContainer = ({ fetchSearchResults, domain, session, users }) => {
   const classes = useStyles();
   return (
     <>
@@ -44,8 +53,9 @@ const FormContainer = ({ fetchSearchResults, domain, session }) => {
         >
           <Route exact path='/sign_in' render={routerProps => <SignIn {...routerProps} classes={classes}/>}/>
           <Route exact path='/sign_up' render={routerProps => <SignUp {...routerProps} classes={classes}/>}/>
-          <Route exact path={['/search', '/']} render={routerProps => <SearchForm {...routerProps} domain={domain} fetchSearchResults={fetchSearchResults} classes={classes}/>}/>
-          <Route exact path='/posts/new' render={routerProps => <PostForm {...routerProps} session={session} domain={domain} classes={classes}/>}/>
+          <Route exact path={['/search', '/']} render={routerProps => <SearchForm {...routerProps} domain={domain} fetchSearchResults={fetchSearchResults} classes={classes} />}/>
+          <Route exact path='/posts/new' render={routerProps => <PostForm {...routerProps} session={session} domain={domain} classes={classes} />}/>
+          <Route exact path='/users/:id' render={routerProps => <UserCard {...routerProps} session={session} domain={domain} classes={classes} users={users} />} />
         </Grid>
       </Container>
     </>

@@ -9,11 +9,11 @@ const SearchForm = ({ classes, fetchSearchResults, history, location, domain, ma
   const distance = useFormInput(50);
   const [url, setUrl] = useState('');
 
-  // useEffect(() => {
-  //   if (location.pathname === "/search" && location.search !== "") {
-  //     fetchSearchResults(`${domain}${location.pathname}/${location.search}`)
-  //   }
-  // },[])
+  useEffect(() => {
+    if (location.pathname === "/search" && location.search !== "") {
+      fetchSearchResults(`${domain}${location.pathname}/${location.search}`)
+    }
+  },[])
 
   const handleOnSubmit = (event) => {
     event.preventDefault();

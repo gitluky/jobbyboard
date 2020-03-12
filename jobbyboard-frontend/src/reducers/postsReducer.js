@@ -6,6 +6,8 @@ export default function postsReducer(state = {}, action) {
       return { ...state, requesting: false, initialPosts: action.payload };
     case 'GET_SEARCH_RESULTS':
       return { ...state, requesting: false, searchResults: action.payload };
+    case 'GET_USER_DATA':
+      return { ...state, requesting: false };
     default:
       return state;
   }
