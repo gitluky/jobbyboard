@@ -10,15 +10,14 @@ import UserCard from './UserCard';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(6,0),
     [theme.breakpoints.up('sm')]: {
-      padding: theme.spacing(6,8),
+      padding: theme.spacing(4,8),
     },
     [theme.breakpoints.up('md')]: {
-      padding: theme.spacing(6,24),
+      padding: theme.spacing(4,24),
     },
     [theme.breakpoints.up('lg')]: {
-      padding: theme.spacing(6,32),
+      padding: theme.spacing(4,32),
     }
   },
   avatarSmall: {

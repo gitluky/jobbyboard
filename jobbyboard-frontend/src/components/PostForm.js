@@ -1,30 +1,46 @@
-import React from 'react';
-import { TextField, Button, Grid, Typography } from '@material-ui/core';
+import 'date-fns';
+import addDays from 'date-fns/addDays';
+import React, {useState, useEffect} from 'react';
+import { TextField, Button, Grid, Typography, MenuItem, InputAdornment } from '@material-ui/core';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 import useFormInput from '../hooks/useFormInput'
 
 const PostForm = ({ classes, history, domain, session }) => {
-  let title = useFormInput('');
-  let description = useFormInput('');
-  let city = useFormInput('');
-  let state = useFormInput('');
+  const title = useFormInput('');
+  const description = useFormInput('');
+  const city = useFormInput('');
+  const state = useFormInput('');
+  const duration = useFormInput('');
+  const payment = useFormInput('');
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const handleDateChange = date => {
+    setSelectedDate(date);
+  };
 
   const handleOnSubmit = (event) => {
-    event.preventDefault();
-    const postData = { post: { title: title.value, description: description.value, city: city.value, state: state.value } }
     fetch(`${domain}/posts`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': `${session.jwt}`
+        'Authorzation': `${session.jwt}`
       },
-      body: JSON.stringify(postData)
-    })
-    .then(resp => resp.json())
-    .then(json => {
-      console.log(json)
-      history.push('/')
+      body: JSON.stringify({
+        title: title,
+        description: description,
+        city: city,
+        state: state,
+        start_datetime: selectedDate,
+        expiration_datetime: `${addDays(selectedDate, duration.value)}`,
+        payment: payment
+      })
     })
   }
 
@@ -92,6 +108,74 @@ const PostForm = ({ classes, history, domain, session }) => {
                {...state}
                />
            </Grid>
+           <MuiPickersUtilsProvider utils={DateFnsUtils}>
+           <Grid item xs={5} >
+             <KeyboardDatePicker
+              required
+              margin="normal"
+              id="date-picker-dialog"
+              label="Date picker dialog"
+              format="MM/dd/yyyy"
+              disablePast
+              value={selectedDate}
+              onChange={handleDateChange}
+              KeyboardButtonProps={{
+                'aria-label': 'change date',
+              }}
+            />
+          </Grid>
+          <Grid item xs={5} >
+            <KeyboardTimePicker
+              required
+              margin="normal"
+              id="time-picker"
+              label="Time picker"
+              value={selectedDate}
+              onChange={handleDateChange}
+              KeyboardButtonProps={{
+               'aria-label': 'change time',
+             }}
+           />
+          </Grid>
+        </MuiPickersUtilsProvider>
+          <Grid item xs={2} >
+           <TextField
+             required
+             select
+             fullWidth
+             margin="normal"
+             variant="outlined"
+             label="Duration"
+             id="duration"
+             name="duration"
+             {...duration}
+             >
+             <MenuItem value={1}>1 day</MenuItem>
+             <MenuItem value={3}>3 days</MenuItem>
+             <MenuItem value={5}>5 days</MenuItem>
+             <MenuItem value={7}>1 week</MenuItem>
+             <MenuItem value={14}>2 weeks</MenuItem>
+           </TextField>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              type="number"
+              InputProps={{
+                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+              }}
+              inputProps={{ min: "0.00", step: "0.01" }}
+              name="payment"
+              label="Payment"
+              id="payment"
+              min="0.00"
+              placeholder="0.00"
+              {...payment}
+              />
+          </Grid>
           <Button
             type="submit"
             fullWidth

@@ -29,11 +29,11 @@ class User < ApplicationRecord
   end
 
   def active_posts
-    self.posts.where(active: true)
+    self.posts.where("completed = ? AND assigned = ? AND cancelled = ? AND expiration_datetime > ?", false, false, false, DateTime.now)
   end
 
   def inactive_posts
-    self.posts.where(active: false)
+    self.posts.where("completed = ? OR assigned = ? OR cancelled = ? OR expiration_datetime < ?", true, true, true, DateTime.now)
   end
 
   def currently_assigned_posts

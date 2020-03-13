@@ -11,16 +11,16 @@ class Post < ApplicationRecord
   reverse_geocoded_by :latitude, :longitude
   after_validation :geocode
 
+  def current_assignment
+    self.assigned ? self.assignments.order(created_at: desc).first : nil
+  end
+
   def location
     [city, state].join(', ')
   end
 
   def formatted_created_at
     created_at.strftime('%B, %d, %Y')
-  end
-
-  def self.active_posts
-    self.where(active: true)
   end
 
   def self.find_by_query_params(q, location, distance)

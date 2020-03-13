@@ -39,10 +39,11 @@ ActiveRecord::Schema.define(version: 2020_03_04_185613) do
   create_table "assignments", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "post_id"
-    t.string "status", default: "Assigned"
+    t.boolean "completed", default: false
     t.datetime "completion_date"
+    t.boolean "cancelled", default: false
+    t.datetime "cancel_datetime"
     t.string "cancel_reason"
-    t.datetime "cancel_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["post_id"], name: "index_assignments_on_post_id"
@@ -64,17 +65,18 @@ ActiveRecord::Schema.define(version: 2020_03_04_185613) do
     t.string "title"
     t.text "description"
     t.datetime "start_datetime"
-    t.datetime "end_datetime"
     t.datetime "expiration_datetime"
     t.string "city"
     t.string "state"
     t.float "longitude"
     t.float "latitude"
     t.bigint "user_id"
-    t.boolean "active", default: true
     t.boolean "completed", default: false
+    t.boolean "assigned", default: false
+    t.boolean "assigned_datetime", default: false
     t.boolean "cancelled", default: false
-    t.decimal "allowance", precision: 16, scale: 2
+    t.datetime "cancel_datetime"
+    t.decimal "payment", precision: 16, scale: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_posts_on_user_id"
