@@ -11,7 +11,7 @@ import {
 
 import useFormInput from '../hooks/useFormInput'
 
-const PostForm = ({ classes, history, domain, session }) => {
+const PostForm = ({ classes, history, domain, session, match }) => {
   const title = useFormInput('');
   const description = useFormInput('');
   const city = useFormInput('');
@@ -25,23 +25,29 @@ const PostForm = ({ classes, history, domain, session }) => {
   };
 
   const handleOnSubmit = (event) => {
+    event.preventDefault();
     fetch(`${domain}/posts`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorzation': `${session.jwt}`
+        'Authorization': `${session.jwt}`
       },
       body: JSON.stringify({
-        title: title,
-        description: description,
-        city: city,
-        state: state,
-        start_datetime: selectedDate,
-        expiration_datetime: `${addDays(selectedDate, duration.value)}`,
-        payment: payment
+        post: {
+          title: title.value,
+          description: description.value,
+          city: city.value,
+          state: state.value,
+          start_datetime: selectedDate,
+          expiration_datetime: `${addDays(selectedDate, duration.value)}`,
+          payment: payment.value
+        }
       })
     })
+    .then(resp => resp.json())
+    .then(json => console.log(json))
+    .catch(error => console.log(error));
   }
 
   return(

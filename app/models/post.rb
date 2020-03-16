@@ -5,14 +5,28 @@ class Post < ApplicationRecord
   has_many :applicants, through: :post_applications, source: :user
   has_many :assignments
 
-  scope :created_by_user_with_status, -> (user, status) { joins(:assignments).where(assignments: {status: status}).find_by(user_id: user.id)}
-
   geocoded_by :location
   reverse_geocoded_by :latitude, :longitude
   after_validation :geocode
 
   def current_assignment
     self.assigned ? self.assignments.order(created_at: desc).first : nil
+  end
+
+  def active?
+    !completed && !assigned && !cancelled && started? && !expired?
+  end
+
+  def inactive?
+    completed || assigned || cancelled || expired?
+  end
+
+  def started?
+    start_datetime < DateTime.now
+  end
+
+  def expired?
+    expiration_datetime < DateTime.now
   end
 
   def location

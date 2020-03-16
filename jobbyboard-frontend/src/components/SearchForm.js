@@ -32,41 +32,42 @@ const SearchForm = ({ classes, fetchSearchResults, history, location, domain, ma
     <>
       <Grid container className={classes.grid}>
        <form className={classes.form} noValidate onSubmit={handleOnSubmit}>
-         <Grid container spacing={2} >
+         <Grid container spacing={2} justify="center" >
            <Typography variant="h5">
              Search Posts
            </Typography>
          </Grid>
          <Grid container spacing={1} >
-         <Grid item xs={7}>
-           <TextField
-             variant="outlined"
-             margin="normal"
-             required
-             fullWidth
-             id="q"
-             label="Search"
-             name="q"
-             autoComplete="q"
-             autoFocus
-             {...q}
-             />
+           <Grid item xs={12}>
+             <TextField
+               variant="outlined"
+               margin="normal"
+               required
+               fullWidth
+               id="q"
+               label="Search"
+               name="q"
+               autoComplete="q"
+               autoFocus
+               {...q}
+               />
            </Grid>
-           <Grid item xs={3}>
-           <TextField
-             variant="outlined"
-             margin="normal"
-             required
-             fullWidth
-             name="location"
-             label="Location"
-             type="text"
-             id="location"
-             autoComplete="current-password"
-             {...searchLocation}
-             />
+         </Grid>
+         <Grid container spacing={1} >
+           <Grid item xs={8}>
+             <TextField
+               variant="outlined"
+               margin="normal"
+               required
+               fullWidth
+               name="location"
+               label="Location"
+               type="text"
+               id="location"
+               {...searchLocation}
+               />
            </Grid>
-           <Grid item xs={2} >
+           <Grid item xs={4} >
              <TextField
                select
                fullWidth

@@ -10,17 +10,9 @@ class PostsController < ApplicationController
 
   end
 
-  def new
-
-  end
-
   def create
-    current_user.posts.create(post_params)
+    post = current_user.posts.create(post_params)
     render json: PostSerializer.new(post), status: 200
-  end
-
-  def edit
-
   end
 
   def update
@@ -47,7 +39,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:user_id, :title, :description, :city, :state)
+    params.require(:post).permit(:title, :description, :city, :state, :start_datetime, :expiration_datetime, :payment)
   end
 
 end
