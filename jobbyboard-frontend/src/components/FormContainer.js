@@ -26,8 +26,8 @@ const useStyles = makeStyles(theme => ({
     height: theme.spacing(7)
   },
   avatarLarge: {
-    width:theme.spacing(18),
-    height: theme.spacing(18)
+    width:theme.spacing(24),
+    height: theme.spacing(24)
   },
   grid: {
     padding: theme.spacing(2),

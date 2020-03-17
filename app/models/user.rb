@@ -25,7 +25,7 @@ class User < ApplicationRecord
   end
 
   def avatar_url
-    rails_blob_path(self.avatar)
+    self.avatar.attached? ? rails_blob_path(self.avatar) : ''
   end
 
   def active_posts

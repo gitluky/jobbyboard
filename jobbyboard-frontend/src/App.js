@@ -43,7 +43,6 @@ const App = (props) => {
     }
   }
 
-
   return(
     <div>
       <Navigationbar {...props} />
