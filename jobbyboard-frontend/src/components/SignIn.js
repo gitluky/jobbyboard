@@ -1,18 +1,16 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Typography, Grid, TextField, Button } from '@material-ui/core';
-import { signInUser} from '../actions/sessionsActions';
 
 import useFormInput from '../hooks/useFormInput';
 
-const SignIn = ({signInUser, apiDomain, history, classes }) => {
+const SignIn = ({signInUser, domain, history, classes }) => {
   let email = useFormInput('');
   let password = useFormInput('');
 
   const handleSubmit = event => {
     event.preventDefault();
     let payload = {email: email.value, password: password.value};
-    signInUser(apiDomain, payload, history);
+    signInUser(domain, payload, history);
   }
 
   return(
@@ -59,8 +57,5 @@ const SignIn = ({signInUser, apiDomain, history, classes }) => {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {apiDomain: state.api.domain};
-}
 
-export default connect(mapStateToProps, {signInUser})(SignIn);
+export default SignIn;

@@ -58,6 +58,11 @@ const Navigationbar = (props) =>  {
     prevOpen.current = open;
   }, [open]);
 
+  // const goHome = (event) => {
+  //
+  //   history.push('/')
+  // }
+
   return (
     <div className={classes.root}>
       <AppBar position="static" style={{ background: 'primary', boxShadow: 'none'}}>
@@ -96,7 +101,7 @@ const Navigationbar = (props) =>  {
             </Popper>
 
           <Typography variant="h5" className={classes.title}>
-            <a href="/" style={{ textDecoration: 'none', color: 'inherit'}} >Jobbyboard</a>
+            <Link to="/" style={{ textDecoration: 'none', color: 'inherit'}} >Jobbyboard</Link>
           </Typography>
           <Button component={ Link } to="/search" style={{ textDecoration: 'none', color: 'inherit'}} >Search</Button>
         </Toolbar>

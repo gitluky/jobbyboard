@@ -16,7 +16,7 @@ export function signInUser(domain, payload, history) {
     })
     .then(json => {
       dispatch({ type: 'SIGN_IN', payload: json })
-      history.push('/')
+      history.push(`/users/${json.id}`)
     })
     .catch(error => console.log(error));
   };
@@ -57,8 +57,7 @@ export function signOut(domain, {jwt}, { history }) {
     })
     .then(resp => resp.json())
     .then(json => {
-      dispatch({ type: 'SIGN_OUT', payload: json })
-      history.push('/')
+      window.location.href = "/";
     })
     .catch(error => console.log(error));
   };

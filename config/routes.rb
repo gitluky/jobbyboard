@@ -21,5 +21,8 @@ Rails.application.routes.draw do
   end
 
   get 'users/:id', to: 'users#show'
+  patch 'users/:id', to: 'users#update'
+  post 'rails/active_storage/direct_uploads', to: 'direct_uploads#create'
+
 
 end

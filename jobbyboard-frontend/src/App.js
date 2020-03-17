@@ -7,11 +7,11 @@ import FormContainer from './components/FormContainer';
 import PostContainer from './components/PostContainer';
 import { fetchInitialPosts, fetchSearchResults } from './actions/fetchPosts';
 import { fetchUserData  } from './actions/fetchUsers';
-import { trySessionRefresh, signOut } from './actions/sessionsActions';
+import { trySessionRefresh, signInUser, signOut } from './actions/sessionsActions';
 
 const App = (props) => {
 
-  const { location, domain, history, fetchInitialPosts, trySessionRefresh } = props;
+  const { session, location, domain, history, fetchInitialPosts, trySessionRefresh} = props;
 
   useEffect(() => {
     const appendGoogleIconLink = () => {
@@ -37,12 +37,18 @@ const App = (props) => {
     return () => clearTimeout(token_refresh_timer)
   }, [])
 
+  const displayCreatePostButton = () => {
+    if (session.isSignedIn === true) {
+      return <Button component={ Link } to="/posts/new" style={{ marginTop: '2em', textDecoration: 'none', color: 'inherit'}} ><Icon color="primary" style={{ fontSize: 30, marginRight: '.25em' }}>add_circle</Icon>Create Post</Button>
+    }
+  }
+
 
   return(
     <div>
       <Navigationbar {...props} />
       <Grid container justify="center">
-        <Button component={ Link } to="/posts/new" style={{ marginTop: '2em', textDecoration: 'none', color: 'inherit'}} ><Icon color="primary" style={{ fontSize: 30, marginRight: '.25em' }}>add_circle</Icon>Create Post</Button>
+        {displayCreatePostButton()}
       </Grid>
       <FormContainer {...props} />
       <PostContainer {...props}/>
@@ -61,6 +67,7 @@ export default connect(
     fetchSearchResults,
     fetchUserData,
     trySessionRefresh,
+    signInUser,
     signOut
   }
   )(App);

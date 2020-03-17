@@ -1,10 +1,9 @@
 class ApplicationController < ActionController::API
   include ActionController::Cookies
+  include AuthenticationHelpers
 
   respond_to :json
   # before_action :authenticate_user!, except: [:index]
-
-
 
   def index
     search_location = 'New York, NY'

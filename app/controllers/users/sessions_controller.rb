@@ -15,7 +15,7 @@ class Users::SessionsController < Devise::SessionsController
     session = { isSignedIn: false, failedRefresh: false }
     self.resource = warden.authenticate!(auth_options)
     if sign_in(resource_name, resource)
-      generate_refresh_token
+      generate_refresh_token(current_user)
       session = { id: resource.id, name: resource.name, isSignedIn: true, failedRefresh: false }
     end
     # yield resource if block_given?
@@ -41,7 +41,7 @@ class Users::SessionsController < Devise::SessionsController
       resource = User.find_by(id: refresh_token['id'] )
       if refresh_token['exp'] > Time.now.to_i && resource.rti == refresh_token['rti'] && resource.jti == refresh_token['jti']
         sign_in(resource_name, resource)
-        generate_refresh_token
+        generate_refresh_token(current_user)
         session = { id: resource.id, name: resource.name, isSignedIn: true, failedRefresh: false }
       end
     end
@@ -49,13 +49,6 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   private
-
-  def generate_refresh_token
-    rti = SecureRandom.uuid
-    current_user.update(rti: rti)
-    refresh_token = JWT.encode({ id: current_user.id, rti: rti, iat: Time.now.to_i, exp: Time.now.to_i + 2592000, jti: current_user.jti }, ENV['DEVISE_JWT_SECRET_KEY'], 'HS256' )
-    cookies.signed[:rt] = { value: refresh_token, expires: 1.month.from_now,  httponly: true }
-  end
 
   def respond_with(resource, _opts = {})
     render json: resource

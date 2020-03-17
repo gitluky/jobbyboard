@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PostList from './PostList';
 import PropTypes from 'prop-types';
-import { makeStyles, AppBar, Tabs, Tab, Box, Typography } from '@material-ui/core';
+import { AppBar, Tabs, Tab, Box, Typography } from '@material-ui/core';
 
 
 function TabPanel(props) {
@@ -25,24 +25,14 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-const useStyles = makeStyles(theme => ({
-  indicator: {
-    indicator: {
-      color: 'white'
-    }
-  }
-}))
-
-
 
 const UserPosts = ({location, history, match, domain, session, fetchUserData, users, requesting}) => {
-  const classes = useStyles();
   const user = users[match.params.id] || null;
 
   const [value, setValue] = useState(0);
 
   useEffect(() => {
-    fetchUserData(`${domain}/users/${match.params.id}`, `${session.jwt}`);
+    fetchUserData(`${domain}/users/${match.params.id}`, `${session.jwt}`, history);
   }, []);
 
   const formatFetchedPosts = (userPosts) => {

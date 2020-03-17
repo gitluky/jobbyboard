@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TextField, Button, Grid, Typography } from '@material-ui/core';
+import { DirectUpload } from 'activestorage';
 
 import useFormInput from '../hooks/useFormInput'
 
-const SignUp = ({ classes, history, domain }) => {
-  let name = useFormInput('');
-  let email = useFormInput('');
-  let password = useFormInput('');
-  let city = useFormInput('');
-  let state = useFormInput('');
-  let avatar = useFormInput('');
+const SignUp = ({ classes, history, domain, signInUser, session }) => {
+  const name = useFormInput('');
+  const email = useFormInput('');
+  const password = useFormInput('');
+  const city = useFormInput('');
+  const state = useFormInput('');
+  const [file, setFile] = useState('');
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
+    let jwt
+    let userId
     const userData = { user: { name: name.value, email: email.value, password: password.value, city: city.value, state: state.value } }
     fetch(`${domain}/users`, {
       method: 'POST',
@@ -22,11 +25,43 @@ const SignUp = ({ classes, history, domain }) => {
       },
       body: JSON.stringify(userData)
     })
-    .then(resp => resp.json())
-    .then(json => {
-      console.log(json)
-      history.push('/')
+    .then(resp => {
+      jwt = resp.headers.get('Authorization');
+      return resp.json()
     })
+    .then((json) => {
+      userId = json.id;
+      if (!!file) {
+        attachAvatar(userId, jwt);
+      } else {
+        signInUser(domain, { email: email.value, password: password.value }, history)
+      }      
+    })
+  }
+
+  const attachAvatar = (userId, jwt) => {
+    const upload = new DirectUpload(file, `${domain}/rails/active_storage/direct_uploads`);
+    upload.create((error, blob) => {
+      if (error) {
+        console.log(error)
+      } else {
+        fetch(`${domain}/users/${userId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `${jwt}`
+          },
+          body: JSON.stringify({user: { avatar: blob.signed_id}})
+        })
+        .then(resp => resp.json())
+        .then(json => signInUser(domain, { email: email.value, password: password.value }, history))
+      }
+    })
+  }
+
+  const handleFileSelect = (event) => {
+    setFile(event.target.files[0])
   }
 
   return(
@@ -72,7 +107,7 @@ const SignUp = ({ classes, history, domain }) => {
                type="password"
                name="password"
                autoFocus
-             {...email}
+             {...password}
              />
            </Grid>
            <Grid item xs={6}>
@@ -121,9 +156,10 @@ const SignUp = ({ classes, history, domain }) => {
             className={classes.input}
             id="avatar-upload-file"
             multiple
-            name="avatar"
+            name="file"
             type="file"
-            {...avatar}
+            onChange={handleFileSelect}
+            direct-upload="true"
             />
           </Grid>
         </Grid>
@@ -134,7 +170,7 @@ const SignUp = ({ classes, history, domain }) => {
             variant="contained"
             color="primary"
             className={classes.submit}
-          >Create Post</Button>
+          >Submit</Button>
         </Grid>
         </form>
       </Grid>

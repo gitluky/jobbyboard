@@ -4,6 +4,7 @@ class Post < ApplicationRecord
   has_many :post_applications
   has_many :applicants, through: :post_applications, source: :user
   has_many :assignments
+  has_many_attached :photos
 
   geocoded_by :location
   reverse_geocoded_by :latitude, :longitude

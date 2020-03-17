@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const FormContainer = ({ fetchSearchResults, domain, session, users }) => {
+const FormContainer = ({ fetchSearchResults, signInUser, domain, session, users }) => {
   const classes = useStyles();
   return (
     <>
@@ -51,8 +51,8 @@ const FormContainer = ({ fetchSearchResults, domain, session, users }) => {
           alignItems="center"
           className={classes.root}
         >
-          <Route exact path='/sign_in' render={routerProps => <SignIn {...routerProps} classes={classes}/>}/>
-          <Route exact path='/sign_up' render={routerProps => <SignUp {...routerProps} classes={classes}/>}/>
+          <Route exact path='/sign_in' render={routerProps => <SignIn {...routerProps} classes={classes} domain={domain} signInUser={signInUser} />}/>
+          <Route exact path='/sign_up' render={routerProps => <SignUp {...routerProps} classes={classes} domain={domain} signInUser={signInUser} /> }/>
           <Route exact path={['/search', '/']} render={routerProps => <SearchForm {...routerProps} domain={domain} fetchSearchResults={fetchSearchResults} classes={classes} />}/>
           <Route exact path='/posts/new' render={routerProps => <PostForm {...routerProps} session={session} domain={domain} classes={classes} />}/>
           <Route exact path='/users/:id' render={routerProps => <UserCard {...routerProps} session={session} domain={domain} classes={classes} users={users} />} />

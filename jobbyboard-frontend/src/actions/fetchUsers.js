@@ -1,4 +1,4 @@
-export function fetchUserData(url, jwt) {
+export function fetchUserData(url, jwt, history) {
   return (dispatch) => {
     dispatch({ type: 'GETTING_POSTS', })
     fetch(url, {
@@ -11,6 +11,13 @@ export function fetchUserData(url, jwt) {
       credentials: 'include'
     })
     .then(resp => resp.json())
-    .then(json => dispatch({ type: 'GET_USER_DATA', payload: json.data }))
+    .then(json => {
+      if (!!json.errors) {
+        history.push('/');
+        console.log(json.errors)
+      } else {
+        dispatch({ type: 'GET_USER_DATA', payload: json.data })
+      }
+    })
   }
 }
