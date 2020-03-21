@@ -12,12 +12,14 @@ import sessionsReducer from './reducers/sessionsReducer';
 import postsReducer from './reducers/postsReducer';
 import apiReducer from './reducers/apiReducer';
 import usersReducer from './reducers/usersReducer';
+import alertsReducer from './reducers/alertsReducer';
 
 const rootReducer = combineReducers({
   session: sessionsReducer,
   posts: postsReducer,
   api: apiReducer,
-  users: usersReducer
+  users: usersReducer,
+  alerts: alertsReducer
 });
 
 const initialState = {
@@ -28,7 +30,8 @@ const initialState = {
   api: {
     domain: 'https://localhost:3001'
   },
-  posts: {requesting: false}
+  posts: {requesting: false},
+  alerts: {}
 }
 
 const store = createStore(rootReducer, initialState, compose(

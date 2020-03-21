@@ -1,9 +1,9 @@
 import React from 'react';
 import UserForm from './UserForm';
 
-const SignUp = (props) => {
-  const fetchPath = `${props.domain}/users`;
-  const fetchMethod = 'POST';
+const EditUser = (props) => {
+  const fetchPath = `${props.domain}/users/${props.match.params.id}/update`;
+  const fetchMethod = 'PATCH';
   return(
     <>
       <UserForm {...props} fetchPath={fetchPath} fetchMethod={fetchMethod} />
@@ -11,4 +11,4 @@ const SignUp = (props) => {
   )
 }
 
-export default SignUp;
+export default EditUser;

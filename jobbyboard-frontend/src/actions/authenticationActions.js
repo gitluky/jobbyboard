@@ -15,10 +15,17 @@ export function signInUser(domain, payload, history) {
       return resp.json()
     })
     .then(json => {
-      dispatch({ type: 'SIGN_IN', payload: json })
-      history.push(`/users/${json.id}`)
+      if (json.error) {
+        dispatch({type: 'UPDATE_AUTH_ERRORS', payload: json.error})
+      } else {
+        dispatch({ type: 'SIGN_IN', payload: json })
+        dispatch({ type: 'CLEAR_ERRORS' })
+        history.push(`/users/${json.id}`)
+      }
     })
-    .catch(error => console.log(error));
+    .catch(error => {
+      dispatch({type: 'UPDATE_AUTH_ERRORS', payload: error.message })
+    });
   };
 };
 

@@ -4,6 +4,7 @@ import { Container, Grid, makeStyles } from '@material-ui/core';
 
 import SignIn from './SignIn';
 import SignUp from './SignUp';
+import EditUser from './EditUser';
 import SearchForm from './SearchForm';
 import PostForm from './PostForm';
 import UserCard from './UserCard';
@@ -40,7 +41,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const FormContainer = ({ fetchSearchResults, signInUser, domain, session, users }) => {
+const FormContainer = ({ fetchSearchResults, signInUser, domain, session, users, alerts, updateErrors, clearErrors }) => {
   const classes = useStyles();
   return (
     <>
@@ -51,8 +52,9 @@ const FormContainer = ({ fetchSearchResults, signInUser, domain, session, users 
           alignItems="center"
           className={classes.root}
         >
-          <Route exact path='/sign_in' render={routerProps => <SignIn {...routerProps} classes={classes} domain={domain} signInUser={signInUser} />}/>
-          <Route exact path='/sign_up' render={routerProps => <SignUp {...routerProps} classes={classes} domain={domain} signInUser={signInUser} /> }/>
+          <Route exact path='/sign_in' render={routerProps => <SignIn {...routerProps} classes={classes} domain={domain} signInUser={signInUser} alerts={alerts} updateErrors={updateErrors} clearErrors={clearErrors} />}/>
+          <Route exact path='/sign_up' render={routerProps => <SignUp {...routerProps} classes={classes} domain={domain} signInUser={signInUser} alerts={alerts} updateErrors={updateErrors} clearErrors={clearErrors} /> }/>
+          <Route exact path='/users/:id/edit' render={routerProps => <EditUser {...routerProps} classes={classes} domain={domain} signInUser={signInUser} /> }/>
           <Route exact path={['/search', '/']} render={routerProps => <SearchForm {...routerProps} domain={domain} fetchSearchResults={fetchSearchResults} classes={classes} />}/>
           <Route exact path='/posts/new' render={routerProps => <PostForm {...routerProps} session={session} domain={domain} classes={classes} />}/>
           <Route exact path='/users/:id' render={routerProps => <UserCard {...routerProps} session={session} domain={domain} classes={classes} users={users} />} />

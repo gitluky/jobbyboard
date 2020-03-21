@@ -5,13 +5,14 @@ import { Button, Icon, Grid } from '@material-ui/core';
 import Navigationbar from './components/Navigationbar';
 import FormContainer from './components/FormContainer';
 import PostContainer from './components/PostContainer';
-import { fetchInitialPosts, fetchSearchResults } from './actions/fetchPosts';
-import { fetchUserData  } from './actions/fetchUsers';
-import { trySessionRefresh, signInUser, signOut } from './actions/sessionsActions';
+import { fetchInitialPosts, fetchSearchResults } from './actions/postsActions';
+import { fetchUserData  } from './actions/usersActions';
+import { trySessionRefresh, signInUser, signOut } from './actions/authenticationActions';
+import { updateErrors, clearErrors } from './actions/alertsActions';
 
 const App = (props) => {
 
-  const { session, location, domain, history, fetchInitialPosts, trySessionRefresh} = props;
+  const { session, location, domain, history, fetchInitialPosts, trySessionRefresh, alerts} = props;
 
   useEffect(() => {
     const appendGoogleIconLink = () => {
@@ -49,14 +50,14 @@ const App = (props) => {
       <Grid container justify="center">
         {displayCreatePostButton()}
       </Grid>
-      <FormContainer {...props} />
+      <FormContainer {...props} alerts={alerts} />
       <PostContainer {...props}/>
     </div>
   )
 }
 
 const mapStateToProps = (state) => {
-  return { domain: state.api.domain, posts: state.posts, session: state.session, users: state.users }
+  return { domain: state.api.domain, posts: state.posts, session: state.session, users: state.users, alerts: state.alerts }
 }
 
 export default connect(
@@ -67,6 +68,8 @@ export default connect(
     fetchUserData,
     trySessionRefresh,
     signInUser,
-    signOut
+    signOut,
+    clearErrors,
+    updateErrors
   }
   )(App);

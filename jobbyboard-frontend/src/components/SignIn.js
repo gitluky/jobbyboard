@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Typography, Grid, TextField, Button } from '@material-ui/core';
+import Alerts from './Alerts';
 
 import useFormInput from '../hooks/useFormInput';
 
-const SignIn = ({signInUser, domain, history, classes }) => {
+const SignIn = ({signInUser, domain, history, classes, alerts, updateErrors, clearErrors }) => {
   let email = useFormInput('');
   let password = useFormInput('');
 
@@ -13,9 +14,18 @@ const SignIn = ({signInUser, domain, history, classes }) => {
     signInUser(domain, payload, history);
   }
 
+  useEffect(() => {
+    if (!!alerts.errors) {
+      clearErrors();
+    }
+  }, [history])
+
   return(
     <>
       <Grid item xs={12} >
+        <Grid container justify="center" direction="column" spacing={2} >
+         { !!alerts && <Alerts alerts={alerts} />}
+        </Grid>
         <form className={classes.form} noValidate onSubmit={handleSubmit} >
          <Typography variant="h5">
            Sign In
