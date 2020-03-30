@@ -54,9 +54,9 @@ const PostForm = ({ classes, history, domain, session, match }) => {
     <>
       <Grid container className={classes.grid}>
        <form className={classes.form} noValidate onSubmit={handleOnSubmit}>
-         <Grid container spacing={2} >
+         <Grid container spacing={2} justify="center">
            <Typography variant="h5">
-             New Post
+             Create A New Post
            </Typography>
          </Grid>
          <Grid container spacing={1} >
@@ -70,8 +70,12 @@ const PostForm = ({ classes, history, domain, session, match }) => {
              label="Title"
              name="title"
              autoFocus
+             inputProps={{ maxLength: 120}}
              {...title}
              />
+             <Typography variant="caption" display="block" align="right">
+               {title.value.length}/120 characters
+             </Typography>
            <TextField
              variant="outlined"
              margin="normal"
@@ -83,8 +87,12 @@ const PostForm = ({ classes, history, domain, session, match }) => {
              name="description"
              rows="10"
              autoFocus
+             inputProps={{ maxLength: 750}}
              {...description}
              />
+           <Typography variant="caption" display="block" align="right">
+             {description.value.length}/750 characters
+           </Typography>
            </Grid>
            <Grid item xs={6}>
              <TextField

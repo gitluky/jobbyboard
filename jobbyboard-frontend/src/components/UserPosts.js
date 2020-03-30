@@ -35,12 +35,6 @@ const UserPosts = ({location, history, match, domain, session, fetchUserData, us
     fetchUserData(`${domain}/users/${match.params.id}`, `${session.jwt}`, history);
   }, []);
 
-  const formatFetchedPosts = (userPosts) => {
-    return userPosts.map((userPost) => {
-      return { id: userPost.id, attributes: {...userPost} };
-    })
-  }
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -55,10 +49,10 @@ const UserPosts = ({location, history, match, domain, session, fetchUserData, us
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <PostList posts={user ? formatFetchedPosts(user.attributes.active_posts) : []} requesting={requesting}/>
+        <PostList posts={user ? user.attributes.active_posts : []} session={session} requesting={requesting}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <PostList posts={user ? formatFetchedPosts(user.attributes.inactive_posts) : []} requesting={requesting}/>
+        <PostList posts={user ? user.attributes.inactive_posts : []} session={session} requesting={requesting}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item Three
