@@ -37,24 +37,20 @@ ActiveRecord::Schema.define(version: 2020_03_04_185613) do
   end
 
   create_table "assignments", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "post_id"
-    t.boolean "completed", default: false
+    t.bigint "post_applications_id"
+    t.integer "status", default: 1
     t.datetime "completion_date"
-    t.boolean "cancelled", default: false
     t.datetime "cancel_datetime"
     t.string "cancel_reason"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["post_id"], name: "index_assignments_on_post_id"
-    t.index ["user_id"], name: "index_assignments_on_user_id"
+    t.index ["post_applications_id"], name: "index_assignments_on_post_applications_id"
   end
 
   create_table "post_applications", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "post_id"
-    t.boolean "accepted", default: false
-    t.boolean "confirmed", default: false
+    t.integer "status", default: 1
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["post_id"], name: "index_post_applications_on_post_id"

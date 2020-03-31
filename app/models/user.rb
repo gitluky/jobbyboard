@@ -9,8 +9,8 @@ class User < ApplicationRecord
   has_one_attached :avatar
 
   has_many :posts
-  has_many :assignments
-  has_many :post_applications
+  has_many :assignments, through: :post_applications
+  has_many :post_applications, class_name: 'PostApplication', foreign_key: 'applicant_id'
 
   validates :name, presence: true
   validates :city, presence: true
@@ -45,7 +45,7 @@ class User < ApplicationRecord
   end
 
   def current_assignments
-    self.assignments.where(status: 'Assigned')
+    self.assignments.where(status: 1)
   end
 
   def current_assigned_posts
@@ -53,7 +53,7 @@ class User < ApplicationRecord
   end
 
   def completed_assignments
-    self.assignments.where(status: 'Completed')
+    self.assignments.where(status: 2)
   end
 
   def completed_assigned_posts
@@ -65,15 +65,15 @@ class User < ApplicationRecord
   end
 
   def offers
-    self.post_applications.where(accepted: true)
+    self.post_applications.where(status: 2)
   end
 
   def unconfirmed_offers
-    self.offers.where(confirmed: false)
+    self.post_applications.where(sstatus: 4)
   end
 
   def confirmed_offers
-    self.offers.where(confirmed: true)
+    self.post_applications.where(status: 6)
   end
 
 end

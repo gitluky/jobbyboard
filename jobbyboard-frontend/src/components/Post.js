@@ -31,8 +31,11 @@ const Post = ({ session, post: { id, attributes: {user, title, formatted_created
             <CardContent>
               <Typography variant="h5" component="h2">
                 {title}
-                <Button component={ Link } to={`/posts/${id}`} color="primary">View</Button>
-                { !!session && user === session.id && <Button component={ Link } to={`/posts/${id}/edit`} color="primary">Edit</Button> }
+
+                { !!session && user === session.id &&
+                  <>
+                    <Button component={ Link } to={`/posts/${id}`} color="primary">View</Button>
+                  </> }
               </Typography>
               <Typography color="textSecondary">
                 {formatted_created_at} - {location}
