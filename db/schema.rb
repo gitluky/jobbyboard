@@ -36,25 +36,13 @@ ActiveRecord::Schema.define(version: 2020_03_04_185613) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "assignments", force: :cascade do |t|
-    t.bigint "post_applications_id"
-    t.integer "status", default: 1
-    t.datetime "completion_date"
-    t.datetime "cancel_datetime"
-    t.string "cancel_reason"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["post_applications_id"], name: "index_assignments_on_post_applications_id"
-  end
-
-  create_table "post_applications", force: :cascade do |t|
+  create_table "likes", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "post_id"
-    t.integer "status", default: 1
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["post_id"], name: "index_post_applications_on_post_id"
-    t.index ["user_id"], name: "index_post_applications_on_user_id"
+    t.index ["post_id"], name: "index_likes_on_post_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -67,11 +55,8 @@ ActiveRecord::Schema.define(version: 2020_03_04_185613) do
     t.float "longitude"
     t.float "latitude"
     t.bigint "user_id"
-    t.boolean "completed", default: false
-    t.boolean "assigned", default: false
-    t.boolean "assigned_datetime", default: false
-    t.boolean "cancelled", default: false
-    t.datetime "cancel_datetime"
+    t.boolean "deactivated", default: false
+    t.datetime "deactivated_datetime"
     t.decimal "payment", precision: 16, scale: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

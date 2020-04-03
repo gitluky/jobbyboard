@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Navigationbar = (props) =>  {
-  const { domain, session, signOut, history } = props;
+  const { domain, session, signOut, history, match, fetchUserData, fetchInitialPosts } = props;
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
@@ -36,16 +36,30 @@ const Navigationbar = (props) =>  {
     setOpen(false);
   };
 
-  function handleListKeyDown(event) {
+
+
+  const handleListKeyDown = (event) => {
     if (event.key === 'Tab') {
       event.preventDefault();
       setOpen(false);
     }
   }
 
-  function handleSignOut(event) {
+  const handleSignOut = (event) => {
     event.preventDefault();
     signOut(domain, session, history);
+  }
+
+  const handleMyProfile = (event) => {
+    event.preventDefault();
+    history.push(`/users/${session.id}`)
+    fetchUserData(`${domain}/users/${session.id}`, `${session.jwt}`, history)
+  }
+
+  const handleJobbyboard = (event) => {
+    event.preventDefault();
+    history.push('/')
+    fetchInitialPosts(domain);
   }
 
   // return focus to the button when we transitioned from !open -> open
@@ -86,7 +100,7 @@ const Navigationbar = (props) =>  {
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                     {session.id ?
                       <div>
-                        <MenuItem onClick={handleClose} component={NavLink} to={`/users/${session.id}`} style={{ textDecoration: 'none', color: 'default' }} activeClassName="active" >My Profile</MenuItem>
+                        <MenuItem onClick={handleMyProfile} style={{ textDecoration: 'none', color: 'default' }}>My Profile</MenuItem>
                         <MenuItem onClick={handleSignOut} style={{ textDecoration: 'none', color: 'inherit'}} >Sign Out</MenuItem>
                       </div>
                      :
@@ -101,7 +115,7 @@ const Navigationbar = (props) =>  {
             </Popper>
 
           <Typography variant="h5" className={classes.title}>
-            <Link to="/" style={{ textDecoration: 'none', color: 'inherit'}} >Jobbyboard</Link>
+            <Button onClick={handleJobbyboard} style={{ textDecoration: 'none', color: 'inherit'}} ><Typography variant="h4" component="h4">Jobbyboard</Typography></Button>
           </Typography>
           <Button component={ Link } to="/search" style={{ textDecoration: 'none', color: 'inherit'}} >Search</Button>
         </Toolbar>

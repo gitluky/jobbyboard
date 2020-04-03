@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   root 'application#index'
 
   resources :posts, only: [:new, :create, :show, :edit, :update]
+  post 'posts/:id/like', to: 'likes#create'
+  delete 'posts/:id/unlike', to: 'likes#destroy'
   get 'dashboard', to: 'posts#index'
   get 'posts/:id/activate', to: 'posts#activate'
   get 'posts/:id/deactivate', to: 'posts#deactivate'

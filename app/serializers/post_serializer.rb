@@ -1,7 +1,7 @@
 class PostSerializer
   include FastJsonapi::ObjectSerializer
 
-  attributes :title, :description, :formatted_created_at, :location
+  attributes :title, :user, :description, :formatted_created_at, :formatted_exp_date, :location, :likers
 
   attribute :search_location do |posts, params|
     params[:search_location]
@@ -9,6 +9,10 @@ class PostSerializer
 
   attribute :distance do |posts, params|
     params[:distance]
+  end
+
+  attribute :active do |post|
+    post.active?
   end
 
 end

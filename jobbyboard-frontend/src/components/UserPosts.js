@@ -26,7 +26,7 @@ TabPanel.propTypes = {
 };
 
 
-const UserPosts = ({location, history, match, domain, session, fetchUserData, users, requesting}) => {
+const UserPosts = ({classes, location, history, match, domain, session, fetchUserData, users, requesting}) => {
   const user = users[match.params.id] || null;
 
   const [value, setValue] = useState(0);
@@ -49,13 +49,13 @@ const UserPosts = ({location, history, match, domain, session, fetchUserData, us
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <PostList posts={user ? user.attributes.active_posts : []} session={session} requesting={requesting}/>
+        <PostList posts={user ? user.attributes.active_posts : []} classes={classes} user={user} history={history} domain={domain} session={session} requesting={requesting}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <PostList posts={user ? user.attributes.inactive_posts : []} session={session} requesting={requesting}/>
+        <PostList posts={user ? user.attributes.inactive_posts : []} classes={classes} user={user} history={history} domain={domain} session={session} requesting={requesting}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        Reviews
       </TabPanel>
     </div>
   )

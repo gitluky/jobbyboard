@@ -9,8 +9,7 @@ class User < ApplicationRecord
   has_one_attached :avatar
 
   has_many :posts
-  has_many :assignments, through: :post_applications
-  has_many :post_applications, class_name: 'PostApplication', foreign_key: 'applicant_id'
+  has_many :likes
 
   validates :name, presence: true
   validates :city, presence: true

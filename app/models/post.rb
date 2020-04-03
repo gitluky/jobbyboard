@@ -1,9 +1,8 @@
 class Post < ApplicationRecord
   extend Geocoder::Model::ActiveRecord
   belongs_to :user
-  has_many :post_applications
-  has_many :applicants, through: :post_applications, source: :user
-  has_many :assignments
+  has_many :likes
+  has_many :likers, through: :likes, source: :user
   has_many_attached :photos
 
   geocoded_by :location
@@ -15,11 +14,11 @@ class Post < ApplicationRecord
   end
 
   def active?
-    !completed && !assigned && !cancelled && started? && !expired?
+    !deactivated && started? && !expired?
   end
 
   def inactive?
-    completed || assigned || cancelled || expired?
+    deactivated? || expired?
   end
 
   def started?
@@ -34,8 +33,16 @@ class Post < ApplicationRecord
     [city, state].join(', ')
   end
 
+  def formatted_ts(datetime)
+    datetime.strftime('%B, %d, %Y')
+  end
+
   def formatted_created_at
-    created_at.strftime('%B, %d, %Y')
+    formatted_ts(created_at)
+  end
+
+  def formatted_exp_date
+    formatted_ts(expiration_datetime)
   end
 
   def self.find_by_query_params(q, location, distance)
@@ -43,12 +50,8 @@ class Post < ApplicationRecord
     q != '' ? posts_by_location.where("LOWER(posts.title) like LOWER(?) OR LOWER(posts.description) like LOWER(?)", "%#{q}%", "%#{q}%") : posts_by_location
   end
 
-  def toggle_status(flag)
-    if (flag == 'cancelled' || flag == 'completed') && self.active?
-      self.update("#{flag}": !self[flag], active: false)
-    else
-      self.update("#{flag}": !self[flag])
-    end
+  def toggle_deactivated_status(flag)
+    self.update(deactivated: !self.deactivated)
   end
 
 end

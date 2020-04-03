@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card,
         CardContent,
         Typography,
@@ -6,58 +6,144 @@ import { Card,
         Button,
         ExpansionPanel,
         ExpansionPanelSummary,
-        ExpansionPanelDetails } from '@material-ui/core';
+        ExpansionPanelDetails,
+        Avatar} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
-const Post = ({ session, post: { id, attributes: {user, title, formatted_created_at, location, description}}}) => {
+import defaultAvatar from '../images/default_avatar.png'
+
+const Post = ({ classes, domain, history, session, post: { id, attributes: {user, title, formatted_created_at, formatted_exp_date, location, description, likers, active }}}) => {
 
   const [isExpanded, setIsExpanded] = useState(false)
+  const [liked, setLiked] = useState()
+
+  useEffect(() => {
+    if (!!session) setLiked(() => likers.includes(session.id))
+  }, [session])
 
   const handleExpansion = () => {
     setIsExpanded(!isExpanded)
   }
 
+  const handleLike = (event) => {
+    event.preventDefault();
+    if (!!session) {
+      const likeData = { like: { user_id: session.id, post_id: id} }
+      fetch(`${domain}/posts/${id}/like`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `${session.jwt}`
+        },
+        body: JSON.stringify(likeData)
+      })
+      .then(resp => resp.json())
+      .then(json => setLiked(!liked))
+    } else {
+      history.push('/login')
+    }
+  }
+
+  const handleUnlike = (event) => {
+    event.preventDefault();
+    if (!!session) {
+      const unlikeData = { like: { user_id: session.id, post_id: id} }
+      fetch(`${domain}/posts/${id}/unlike`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `${session.jwt}`
+        },
+        body: JSON.stringify(unlikeData)
+      })
+      .then(resp => resp.json())
+      .then(json => setLiked(!liked))
+    } else {
+      history.push('/login')
+    }
+  }
+
   return(
+
     <Grid item>
       <Card>
+        <Grid style={{background: '#3f51b5', paddingTop: '.5em', color: 'white'}}>
+          <Typography variant="h5" component="h2">
+            {((!!session && user.id !== session.id && active ) || (!session && active )) ?
+              <>
+                {!liked ?
+                  <Button onClick={handleLike} color="inherit"><FavoriteBorderOutlinedIcon/></Button>
+                  :
+                  <Button onClick={handleUnlike}><FavoriteIcon color="error"/></Button>
+                }
+                </>
+              :
+              <Button disabled><FavoriteBorderOutlinedIcon/></Button>
+            }
+          {title}
+
+          { !!session && user === session.id &&
+            <>
+            <Button component={ Link } to={`/posts/${id}`} color="primary">View</Button>
+            </> }
+          </Typography>
+        </Grid>
         <ExpansionPanel>
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
             id={"post_"+id}
             onClick={handleExpansion}
+            style={{userSelect: "auto"}}
           >
             <CardContent>
-              <Typography variant="h5" component="h2">
-                {title}
-
-                { !!session && user === session.id &&
-                  <>
-                    <Button component={ Link } to={`/posts/${id}`} color="primary">View</Button>
-                  </> }
-              </Typography>
               <Typography color="textSecondary">
-                {formatted_created_at} - {location}
+                {location}
               </Typography>
               <Typography variant="body2" component="p">
                 { isExpanded ? description : description.slice(0,164) }
               </Typography>
             </CardContent>
           </ExpansionPanelSummary>
-
-        <ExpansionPanelDetails>
-          <Grid container justify="center" spacing={4}>
-            <Grid item>
-              <Button component={ Link } to={`/posts/${id}/chat`} variant="contained" color="secondary">Chat</Button>
+          <ExpansionPanelDetails>
+            <Grid container>
+              <Typography variant="body2" component="p">
+                Posted On: {formatted_created_at}
+                Expires On: {formatted_exp_date}
+              </Typography>
+              <Grid container justify="center">
+                <Typography variant="body2" component="p">
+                  Email: {user.email}
+                </Typography>
+              </Grid>
+              <Grid container justify="center">
+                <Card style={{ padding: '1em 2em'}}>
+                  <Grid container alignItems="center" spacing={2}>
+                    { user.avatar_url ?
+                      <Grid item>
+                        <Avatar className={classes.avatarSmall} alt={user.name} src={`${domain}` + user.avatar_url}/>
+                      </Grid>
+                      :
+                      <Grid item>
+                        <Avatar className={classes.avatarSmall} alt="default-avatar" src={defaultAvatar}/>
+                      </Grid>
+                    }
+                    <Grid item>
+                      <Typography variant="body2" component="p">
+                        {user.name}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Card>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Button component={ Link } to={`/posts/${id}/apply`} variant="contained" color="primary">Apply</Button>
-            </Grid>
-          </Grid>
-        </ExpansionPanelDetails>
-
-
+          </ExpansionPanelDetails>
       </ExpansionPanel>
     </Card>
   </Grid>
