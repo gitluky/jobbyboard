@@ -16,7 +16,7 @@ class Users::SessionsController < Devise::SessionsController
     self.resource = warden.authenticate!(auth_options)
     if sign_in(resource_name, resource)
       generate_refresh_token(current_user)
-      session = { id: resource.id, name: resource.name, isSignedIn: true, failedRefresh: false }
+      session = { id: resource.id, name: resource.name, location: resource.location, isSignedIn: true, failedRefresh: false }
     end
     # yield resource if block_given?
     respond_with session
@@ -42,7 +42,7 @@ class Users::SessionsController < Devise::SessionsController
       if refresh_token['exp'] > Time.now.to_i && resource.rti == refresh_token['rti'] && resource.jti == refresh_token['jti']
         sign_in(resource_name, resource)
         generate_refresh_token(current_user)
-        session = { id: resource.id, name: resource.name, isSignedIn: true, failedRefresh: false }
+        session = { id: resource.id, name: resource.name, location: resource.location, isSignedIn: true, failedRefresh: false }
       end
     end
     respond_with session

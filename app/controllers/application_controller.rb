@@ -6,15 +6,21 @@ class ApplicationController < ActionController::API
   # before_action :authenticate_user!, except: [:index]
 
   def index
-    binding.pry
-    if current_user
-      search_location = current_user.location
+    if !!location_param[:location]
+      search_location = location_param[:location]
     else
       search_location = 'New York, NY'
     end
     distance = 25
-    posts = Post.near(search_location, distance)
+    search = Post.near(search_location, distance)
+    posts = search.select {|post| post.active?}
     render json: PostSerializer.new(posts, params: {search_location: search_location, distance: distance})
+  end
+
+  private
+
+  def location_param
+    params.permit(:location)
   end
 
 end

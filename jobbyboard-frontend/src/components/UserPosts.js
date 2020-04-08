@@ -57,6 +57,9 @@ const UserPosts = ({classes, location, history, match, domain, session, fetchUse
       <TabPanel value={value} index={2}>
         Reviews
       </TabPanel>
+      <TabPanel value={value} index={3}>
+        Liked
+      </TabPanel>
     </div>
   )
 

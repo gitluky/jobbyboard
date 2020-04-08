@@ -61,10 +61,12 @@ const App = (props) => {
   },[])
 
   useEffect(() => {
-    if (location.pathname === "/") {
+    if (session.isSignedIn){
+      fetchInitialPosts(domain, session.location);
+    } else {
       fetchInitialPosts(domain);
     }
-  }, [])
+  }, [session.id])
 
   useEffect(() => {
     trySessionRefresh(domain, history);

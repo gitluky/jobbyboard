@@ -1,7 +1,8 @@
-export function fetchInitialPosts(domain) {
+export function fetchInitialPosts(domain, location='') {
   return (dispatch) => {
     dispatch({ type: 'GETTING_POSTS', })
-    fetch(`${domain}`)
+    const url = location ? `${domain}?location=${location}` : `${domain}`
+    fetch(`${url}`)
     .then(resp => resp.json())
     .then(json => dispatch({ type: 'GET_INITIAL_POSTS', payload: json.data }))
   }

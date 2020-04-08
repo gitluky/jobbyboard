@@ -23,7 +23,7 @@ const Post = ({ classes, domain, history, session, post: { id, attributes: {user
   const [liked, setLiked] = useState()
 
   useEffect(() => {
-    if (!!session) setLiked(() => likers.includes(session.id))
+    if (session.isSignedIn) setLiked(() => likers.includes(session.id))
   }, [session])
 
   const handleExpansion = () => {
@@ -32,7 +32,7 @@ const Post = ({ classes, domain, history, session, post: { id, attributes: {user
 
   const handleLike = (event) => {
     event.preventDefault();
-    if (!!session) {
+    if (session.isSignedIn) {
       const likeData = { like: { user_id: session.id, post_id: id} }
       fetch(`${domain}/posts/${id}/like`, {
         method: 'POST',
@@ -52,7 +52,7 @@ const Post = ({ classes, domain, history, session, post: { id, attributes: {user
 
   const handleUnlike = (event) => {
     event.preventDefault();
-    if (!!session) {
+    if (session.isSignedIn) {
       const unlikeData = { like: { user_id: session.id, post_id: id} }
       fetch(`${domain}/posts/${id}/unlike`, {
         method: 'DELETE',
@@ -76,7 +76,7 @@ const Post = ({ classes, domain, history, session, post: { id, attributes: {user
       <Card>
         <Grid style={{background: '#3f51b5', paddingTop: '.5em', color: 'white'}}>
           <Typography variant="h5" component="h2">
-            {((!!session && user.id !== session.id && active ) || (!session && active )) ?
+            {((session.isSignedIn && user.id !== session.id && active ) || (!session && active )) ?
               <>
                 {!liked ?
                   <Button onClick={handleLike} color="inherit"><FavoriteBorderOutlinedIcon/></Button>
@@ -89,20 +89,20 @@ const Post = ({ classes, domain, history, session, post: { id, attributes: {user
             }
           {title}
 
-          { !!session && user === session.id &&
+          { session.isSignedIn && user === session.id &&
             <>
             <Button component={ Link } to={`/posts/${id}`} color="primary">View</Button>
             </> }
           </Typography>
         </Grid>
-        <ExpansionPanel>
+        <ExpansionPanel style={{margin: "0", padding: '0'}}>
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
             id={"post_"+id}
             onClick={handleExpansion}
             style={{userSelect: "auto"}}
           >
-            <CardContent>
+            <CardContent  style={{margin: "0", padding: '0 0 8px'}}>
               <Typography color="textSecondary">
                 {location}
               </Typography>
@@ -112,17 +112,25 @@ const Post = ({ classes, domain, history, session, post: { id, attributes: {user
             </CardContent>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <Grid container>
-              <Typography variant="body2" component="p">
-                Posted On: {formatted_created_at}
-                Expires On: {formatted_exp_date}
-              </Typography>
-              <Grid container justify="center">
+            <Grid container justify="center">
+              <div>
+                <div>
+                  <Typography variant="body2" component="p">
+                    Posted On: {formatted_created_at}
+                  </Typography>
+                </div>
+                <div>
+                  <Typography variant="body2" component="p">
+                    Expires On: {formatted_exp_date}
+                  </Typography>
+                </div>
+              </div>
+              <Grid container justify="center" style={{ marginTop: '1em'}}>
                 <Typography variant="body2" component="p">
                   Email: {user.email}
                 </Typography>
               </Grid>
-              <Grid container justify="center">
+              <Grid container justify="center" style={{ marginTop: '1em'}}>
                 <Card style={{ padding: '1em 2em'}}>
                   <Grid container alignItems="center" spacing={2}>
                     { user.avatar_url ?
