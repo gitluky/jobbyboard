@@ -26,7 +26,7 @@ TabPanel.propTypes = {
 };
 
 
-const UserPosts = ({classes, location, history, match, domain, session, fetchUserData, users, requesting}) => {
+const UserPosts = ({classes, location, history, match, domain, session, fetchUserData, users, requesting, formatDateTime}) => {
   const user = users[match.params.id] || null;
 
   const [value, setValue] = useState(0);
@@ -45,20 +45,21 @@ const UserPosts = ({classes, location, history, match, domain, session, fetchUse
         <Tabs value={value} onChange={handleChange} centered TabIndicatorProps={{ style: { backgroundColor: 'white'}}}>
           <Tab label="Active Posts" />
           <Tab label="Past Posts" />
+          <Tab label="Liked" />
           <Tab label="Reviews" />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <PostList posts={user ? user.attributes.active_posts : []} classes={classes} user={user} history={history} domain={domain} session={session} requesting={requesting}/>
+        <PostList posts={user ? user.attributes.active_posts : []} classes={classes} user={user} history={history} domain={domain} session={session} requesting={requesting} formatDateTime={formatDateTime}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <PostList posts={user ? user.attributes.inactive_posts : []} classes={classes} user={user} history={history} domain={domain} session={session} requesting={requesting}/>
+        <PostList posts={user ? user.attributes.inactive_posts : []} classes={classes} user={user} history={history} domain={domain} session={session} requesting={requesting} formatDateTime={formatDateTime}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Reviews
+        <PostList posts={user ? user.attributes.liked_posts : []} classes={classes} user={user} history={history} domain={domain} session={session} requesting={requesting} formatDateTime={formatDateTime}/>
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Liked
+        Reviews
       </TabPanel>
     </div>
   )

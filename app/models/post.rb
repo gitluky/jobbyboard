@@ -34,7 +34,7 @@ class Post < ApplicationRecord
   end
 
   def formatted_ts(datetime)
-    datetime.strftime('%B, %d, %Y')
+    datetime.strftime('%B, %d, %Y %H:%M')
   end
 
   def formatted_created_at

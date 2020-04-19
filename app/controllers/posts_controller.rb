@@ -1,13 +1,10 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, only: [:index, :create]
+  before_action :authenticate_user!, only: [:index, :create, :update]
+  before_action :set_post, only: [:deactivate, :destroy, :update]
 
   def index
     posts = current_user.posts
     render json: PostSerializer.new(posts)
-  end
-
-  def show
-
   end
 
   def create
@@ -24,19 +21,19 @@ class PostsController < ApplicationController
     render json: PostSerializer.new(posts)
   end
 
-  def activate
-
-  end
-
   def deactivate
 
   end
 
-  def cancel
+  def destroy
 
   end
 
   private
+
+  def set_post
+    @post = Post.find_by(id: params[:id])
+  end
 
   def post_params
     params.require(:post).permit(:title, :description, :city, :state, :start_datetime, :expiration_datetime, :payment)

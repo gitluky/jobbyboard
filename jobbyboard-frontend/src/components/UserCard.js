@@ -2,12 +2,13 @@ import React from 'react';
 import { Avatar } from '@material-ui/core';
 import { Grid, Typography } from '@material-ui/core';
 import defaultAvatar from '../images/default_avatar.png'
+import { Link } from 'react-router-dom';
 
 const UserCard = ({ classes, users, match, domain }) => {
   return(
      <>
        <Grid container justify="center" direction="column">
-         {users[match.params.id] ?
+         {(users[match.params.id] && !!users[match.params.id].attributes.avatar_url) ?
            <Grid container justify="center">
              <Avatar className={classes.avatarLarge} alt={users[match.params.id].name} src={`${domain}` + users[match.params.id].attributes.avatar_url}/>
            </Grid>
@@ -28,6 +29,12 @@ const UserCard = ({ classes, users, match, domain }) => {
              </Grid>
            </div>
            : ''}
+         <Grid container justify="center">
+           <div>{users[match.params.id] && users[match.params.id].attributes.rating}</div>
+         </Grid>
+         <Grid container justify="center" style={{ marginTop: '1em'}}>
+           <Link to={`/users/${match.params.id}/review`}>Write Review</Link>
+         </Grid>
        </Grid>
      </>
   )

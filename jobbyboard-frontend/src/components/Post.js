@@ -17,10 +17,10 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import defaultAvatar from '../images/default_avatar.png'
 
-const Post = ({ classes, domain, history, session, post: { id, attributes: {user, title, formatted_created_at, formatted_exp_date, location, description, likers, active }}}) => {
+const Post = ({ classes, domain, history, session, post: { id, attributes: {user, title, formatted_created_at, formatted_exp_date, location, description, likers, active }}, formatDateTime}) => {
 
   const [isExpanded, setIsExpanded] = useState(false)
-  const [liked, setLiked] = useState()
+  const [liked, setLiked] = useState(null)
 
   useEffect(() => {
     if (session.isSignedIn) setLiked(() => likers.includes(session.id))
@@ -71,12 +71,11 @@ const Post = ({ classes, domain, history, session, post: { id, attributes: {user
   }
 
   return(
-
     <Grid item>
       <Card>
         <Grid style={{background: '#3f51b5', paddingTop: '.5em', color: 'white'}}>
           <Typography variant="h5" component="h2">
-            {((session.isSignedIn && user.id !== session.id && active ) || (!session && active )) ?
+            {(session.isSignedIn && user.id !== session.id) ?
               <>
                 {!liked ?
                   <Button onClick={handleLike} color="inherit"><FavoriteBorderOutlinedIcon/></Button>
@@ -116,12 +115,12 @@ const Post = ({ classes, domain, history, session, post: { id, attributes: {user
               <div>
                 <div>
                   <Typography variant="body2" component="p">
-                    Posted On: {formatted_created_at}
+                    Posted On: {formatDateTime(formatted_created_at)}
                   </Typography>
                 </div>
                 <div>
                   <Typography variant="body2" component="p">
-                    Expires On: {formatted_exp_date}
+                    Expires On: {formatDateTime(formatted_exp_date)}
                   </Typography>
                 </div>
               </div>

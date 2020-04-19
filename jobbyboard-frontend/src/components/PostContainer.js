@@ -6,11 +6,23 @@ import { Route } from 'react-router-dom';
 
 const PostContainer = ({ classes, history, users, posts,  domain, session, fetchSearchResults, fetchUserData }) => {
 
+  const formatDateTime = (datetime) => {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    const newDateTime = new Date(`${datetime} UTC`)
+    const month = months[newDateTime.getMonth()]
+    const date = newDateTime.getDate()
+    const year = newDateTime.getFullYear()
+    const hour = () => newDateTime.getHours() > 12 ? `${newDateTime.getHours() - 12}` : `${newDateTime.getHours()}`
+    const ampm = newDateTime.getHours() > 12 ? 'PM' : 'AM'
+    const minute = newDateTime.getMinutes()
+    return `${month} ${date}, ${year} ${hour()}:${minute > 9 ? minute : '0'+minute} ${ampm}`
+  }
+
   return (
       <Container maxWidth="lg" className={classes.postContainer}>
-        <Route exact path="/" render={routerProps => <PostList {...routerProps} classes={classes} posts={posts.initialPosts} requesting={posts.requesting} domain={domain} session={session} /> } />
-        <Route path="/search" render={routerProps => <PostList {...routerProps} classes={classes} posts={posts.searchResults} requesting={posts.requesting} fetchSearchResults={fetchSearchResults} /> }/>
-        <Route path="/users/:id" render={routerProps => <UserPosts {...routerProps} classes={classes} domain={domain} session={session} users={users} requesting={posts.requesting} fetchUserData={fetchUserData} /> }/>
+        <Route exact path="/" render={routerProps => <PostList {...routerProps} classes={classes} posts={posts.initialPosts} requesting={posts.requesting} domain={domain} session={session} formatDateTime={formatDateTime} /> } />
+        <Route path="/search" render={routerProps => <PostList {...routerProps} classes={classes} posts={posts.searchResults} requesting={posts.requesting} fetchSearchResults={fetchSearchResults} formatDateTime={formatDateTime} /> }/>
+        <Route path="/users/:id" render={routerProps => <UserPosts {...routerProps} classes={classes} domain={domain} session={session} users={users} requesting={posts.requesting} fetchUserData={fetchUserData} formatDateTime={formatDateTime} /> }/>
       </Container>
   )
 }

@@ -3,7 +3,7 @@ import Post from './Post';
 
 import { Grid,  Typography } from '@material-ui/core';
 
-const PostList = ({classes, user, history, domain, posts, requesting, session}) => {
+const PostList = ({classes, user, history, domain, posts, requesting, session, formatDateTime}) => {
   const postMessage = () => {
     return(
       <Grid container justify="center" alignItems="center">
@@ -32,7 +32,7 @@ const PostList = ({classes, user, history, domain, posts, requesting, session}) 
             {displayPostCount()}
           </Typography>
         </Grid>
-        { posts ? posts.map(post => <Post key={post.id} classes={classes} user={user} post={post} session={session} history={history} domain={domain} />) : postMessage()}
+        { posts ? posts.map(post => <Post key={post.id} classes={classes} user={user} post={post} session={session} history={history} domain={domain} formatDateTime={formatDateTime} />) : postMessage()}
       </Grid>
     </div>
   )

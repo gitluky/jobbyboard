@@ -1,14 +1,16 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Grid } from '@material-ui/core';
 
 const Alerts = ({alerts}) => {
-  const color = useState(() => {
+  const [color, setColor] = useState('')
+
+  useEffect(() => {
     if (!!alerts.errors) {
-      return 'red'
+      setColor('red')
     } else if (!!alerts.notifications) {
-      return 'green'
+      setColor('green')
     }
-  })
+  },[alerts])
 
   const formatAlerts = (alertMessages) => {
     return(
@@ -30,7 +32,7 @@ const Alerts = ({alerts}) => {
 
   return(
     <>
-      <Grid container justify="center" direction="column" spacing={1} style={{ marginTop: '2em', color: `${color[0]}` }}>
+      <Grid container justify="center" direction="column" spacing={1} style={{ marginTop: '2em', color: `${color}` }}>
         {displayAlerts()}
       </Grid>
     </>

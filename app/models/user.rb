@@ -10,6 +10,8 @@ class User < ApplicationRecord
 
   has_many :posts
   has_many :likes
+  has_many :written_reviews, class_name: 'Review', foreign_key: :reviewer_id
+  has_many :received_reviews, class_name: 'Review', foreign_key: :reviewee_id
 
   validates :name, presence: true
   validates :city, presence: true
@@ -35,44 +37,12 @@ class User < ApplicationRecord
     self.posts.select {|post| post.inactive?}
   end
 
-  def currently_assigned_posts
-    Post.created_by_user_with_status(self, "Assigned")
-  end
-
-  def created_posts_completed
-    Post.created_by_user_with_status(self, "Completed")
-  end
-
-  def current_assignments
-    self.assignments.where(status: 1)
-  end
-
-  def current_assigned_posts
-    self.current_assignments.map(&:post)
-  end
-
-  def completed_assignments
-    self.assignments.where(status: 2)
-  end
-
-  def completed_assigned_posts
-    self.completed_assignments.map(&:post)
-  end
-
-  def applied_to_posts
-    self.post_applications.map {|application| application.post}
-  end
-
-  def offers
-    self.post_applications.where(status: 2)
-  end
-
-  def unconfirmed_offers
-    self.post_applications.where(sstatus: 4)
-  end
-
-  def confirmed_offers
-    self.post_applications.where(status: 6)
+  def rating
+    if !self.received_reviews.empty?
+      self.received_reviews.map {|review| review.rating }.inject{|sum, el| sum + el } / self.received_reviews.size
+    else
+      'No rating yet.'
+    end
   end
 
 end

@@ -8,6 +8,7 @@ import EditUser from './EditUser';
 import SearchForm from './SearchForm';
 import PostForm from './PostForm';
 import UserCard from './UserCard';
+import ReviewForm from './ReviewForm';
 
 const FormContainer = ({ classes, fetchSearchResults, signInUser, domain, session, users, alerts, updateErrors, clearErrors }) => {
 
@@ -26,6 +27,7 @@ const FormContainer = ({ classes, fetchSearchResults, signInUser, domain, sessio
           <Route exact path={['/search', '/']} render={routerProps => <SearchForm {...routerProps} domain={domain} fetchSearchResults={fetchSearchResults} classes={classes} />}/>
           <Route exact path='/posts/new' render={routerProps => <PostForm {...routerProps} session={session} domain={domain} classes={classes} />}/>
           <Route exact path='/users/:id' render={routerProps => <UserCard {...routerProps} session={session} domain={domain} classes={classes} users={users} />} />
+          <Route exact path='/users/:id/review' render={routerProps => <ReviewForm {...routerProps} session={session} domain={domain} classes={classes} users={users} alerts={alerts} updateErrors={updateErrors} clearErrors={clearErrors} />} />
         </Grid>
       </Container>
     </>

@@ -9,12 +9,12 @@ ny_municipalities = csv[1..csv.length].flatten
   user.avatar.attach(io: File.open('./public/default_avatar.png'), filename: 'default_avatar.png', content_type: 'application/png')
   5.times do
     start_datetime = Time.now
-    expiration_datetime = start_datetime + [86400, 259200, 432000, 604800,1,210,000].sample
+    expiration_datetime = start_datetime + [86400, 259200, 432000, 604800, 1210000].sample
     user.posts.create(title: Faker::Lorem.sentences(number: 1)[0], description: Faker::Lorem.paragraph_by_chars(number: rand(100..300)), start_datetime: start_datetime, expiration_datetime: expiration_datetime, city: ny_municipalities.sample, state: "NY", payment: Faker::Number.decimal(l_digits: 2))
   end
   5.times do
     start_datetime = Time.now - rand(2628000)
-    expiration_datetime = start_datetime + [86400, 259200, 432000, 604800,1,210,000].sample
+    expiration_datetime = start_datetime + [86400, 259200, 432000, 604800, 1210000].sample
     user.posts.create(title: Faker::Lorem.sentences(number: 1)[0], description: Faker::Lorem.paragraph_by_chars(number: rand(100..300)), start_datetime: start_datetime, expiration_datetime: expiration_datetime, city: ny_municipalities.sample, state: "NY", payment: Faker::Number.decimal(l_digits: 2))
   end
 end

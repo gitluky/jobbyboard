@@ -26,6 +26,18 @@ const PostForm = ({ classes, history, domain, session, match }) => {
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
+    const postData = JSON.stringify({
+        post: {
+          title: title.value,
+          description: description.value,
+          city: city.value,
+          state: state.value,
+          start_datetime: `${selectedDate}`,
+          expiration_datetime: `${addDays(selectedDate, duration.value)}`,
+          payment: payment.value
+        }
+      })
+      debugger;
     fetch(`${domain}/posts`, {
       method: 'POST',
       headers: {
@@ -33,17 +45,7 @@ const PostForm = ({ classes, history, domain, session, match }) => {
         'Accept': 'application/json',
         'Authorization': `${session.jwt}`
       },
-      body: JSON.stringify({
-        post: {
-          title: title.value,
-          description: description.value,
-          city: city.value,
-          state: state.value,
-          start_datetime: selectedDate,
-          expiration_datetime: `${addDays(selectedDate, duration.value)}`,
-          payment: payment.value
-        }
-      })
+      body: postData
     })
     .then(resp => resp.json())
     .then(json => console.log(json))
