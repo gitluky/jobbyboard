@@ -56,7 +56,7 @@ const Navigationbar = (props) =>  {
     fetchUserData(`${domain}/users/${session.id}`, `${session.jwt}`, history)
   }
 
-  const handleJobbyboard = (event) => {
+  const handleClickJobbyboard = (event) => {
     event.preventDefault();
     history.push('/')
     fetchInitialPosts(domain);
@@ -71,11 +71,6 @@ const Navigationbar = (props) =>  {
 
     prevOpen.current = open;
   }, [open]);
-
-  // const goHome = (event) => {
-  //
-  //   history.push('/')
-  // }
 
   return (
     <div className={classes.root}>
@@ -115,7 +110,7 @@ const Navigationbar = (props) =>  {
             </Popper>
 
           <Typography variant="h5" className={classes.title}>
-            <Button onClick={handleJobbyboard} style={{ textDecoration: 'none', color: 'inherit'}} ><Typography variant="h4" component="h4">Jobbyboard</Typography></Button>
+            <Button><a href="/" style={{ textDecoration: 'none', color: 'white'}} ><Typography variant="h4" component="h4">Jobbyboard</Typography></a></Button>
           </Typography>
           <Button component={ Link } to="/search" style={{ textDecoration: 'none', color: 'inherit'}} >Search</Button>
         </Toolbar>

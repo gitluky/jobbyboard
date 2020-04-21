@@ -5,4 +5,8 @@ class Review < ApplicationRecord
   validates :reviewer, uniqueness: { scope: [:reviewee], message: 'has already written a review for this user.'}
   validates :reviewee, :reviewer, :title, :content, :rating, presence: true
 
+  def formatted_ts(datetime)
+    datetime.strftime('%B, %d, %Y %H:%M')
+  end
+
 end

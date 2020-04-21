@@ -29,8 +29,23 @@ const UserCard = ({ classes, users, match, domain }) => {
              </Grid>
            </div>
            : ''}
-         <Grid container justify="center">
-           <div>{users[match.params.id] && users[match.params.id].attributes.rating}</div>
+         <Grid container justify="center" style={{ marginTop: '1em'}}>
+           <div>
+             {users[match.params.id] &&
+               <div>
+                 <Grid container justify="center">
+                   <Typography variant="overline">
+                     Avg User Rating:
+                   </Typography>
+                 </Grid>
+                 <Grid container justify="center">
+                   <Typography variant="h5">
+                     {users[match.params.id].attributes.rating}
+                   </Typography>
+                 </Grid>
+               </div>
+             }
+           </div>
          </Grid>
          <Grid container justify="center" style={{ marginTop: '1em'}}>
            <Link to={`/users/${match.params.id}/review`}>Write Review</Link>

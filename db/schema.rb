@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 2020_04_08_234910) do
   create_table "reviews", force: :cascade do |t|
     t.bigint "reviewer_id"
     t.bigint "reviewee_id"
-    t.integer "rating"
+    t.float "rating"
     t.string "title"
     t.text "content"
     t.datetime "created_at", precision: 6, null: false

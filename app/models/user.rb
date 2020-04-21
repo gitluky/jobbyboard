@@ -39,7 +39,8 @@ class User < ApplicationRecord
 
   def rating
     if !self.received_reviews.empty?
-      self.received_reviews.map {|review| review.rating }.inject{|sum, el| sum + el } / self.received_reviews.size
+      average = self.received_reviews.map {|review| review.rating }.inject{|sum, el| sum + el } / self.received_reviews.size
+      average.round(1)
     else
       'No rating yet.'
     end

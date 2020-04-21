@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PostList from './PostList';
+import Reviews from './Reviews';
 import PropTypes from 'prop-types';
 import { AppBar, Tabs, Tab, Box, Typography } from '@material-ui/core';
 
@@ -59,7 +60,7 @@ const UserPosts = ({classes, location, history, match, domain, session, fetchUse
         <PostList posts={user ? user.attributes.liked_posts : []} classes={classes} user={user} history={history} domain={domain} session={session} requesting={requesting} formatDateTime={formatDateTime}/>
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Reviews
+        <Reviews reviews={user ? user.attributes.reviews : []} formatDateTime={formatDateTime}/>
       </TabPanel>
     </div>
   )

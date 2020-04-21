@@ -66,7 +66,7 @@ const App = (props) => {
     } else {
       fetchInitialPosts(domain);
     }
-  }, [session.id])
+  }, [session.isSignedIn])
 
   useEffect(() => {
     trySessionRefresh(domain, history);

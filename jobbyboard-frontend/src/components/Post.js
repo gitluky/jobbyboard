@@ -130,24 +130,26 @@ const Post = ({ classes, domain, history, session, post: { id, attributes: {user
                 </Typography>
               </Grid>
               <Grid container justify="center" style={{ marginTop: '1em'}}>
-                <Card style={{ padding: '1em 2em'}}>
-                  <Grid container alignItems="center" spacing={2}>
-                    { user.avatar_url ?
+                <Link to={"/users/" + user.id}>
+                  <Card style={{ padding: '1em 2em'}}>
+                    <Grid container alignItems="center" spacing={2}>
+                      { user.avatar_url ?
+                        <Grid item>
+                          <Avatar className={classes.avatarSmall} alt={user.name} src={`${domain}` + user.avatar_url}/>
+                        </Grid>
+                        :
+                        <Grid item>
+                          <Avatar className={classes.avatarSmall} alt="default-avatar" src={defaultAvatar}/>
+                        </Grid>
+                      }
                       <Grid item>
-                        <Avatar className={classes.avatarSmall} alt={user.name} src={`${domain}` + user.avatar_url}/>
+                        <Typography variant="body2" component="p">
+                          {user.name}
+                        </Typography>
                       </Grid>
-                      :
-                      <Grid item>
-                        <Avatar className={classes.avatarSmall} alt="default-avatar" src={defaultAvatar}/>
-                      </Grid>
-                    }
-                    <Grid item>
-                      <Typography variant="body2" component="p">
-                        {user.name}
-                      </Typography>
                     </Grid>
-                  </Grid>
-                </Card>
+                  </Card>
+                </Link>
               </Grid>
             </Grid>
           </ExpansionPanelDetails>

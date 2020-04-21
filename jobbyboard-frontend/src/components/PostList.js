@@ -17,7 +17,7 @@ const PostList = ({classes, user, history, domain, posts, requesting, session, f
   const displayPostCount = () => {
     if (!!posts) {
       if (posts[0] && posts[0].attributes.distance) {
-        return <>{posts.length} posts within {posts[0].attributes.distance} miles of {posts[0].attributes.location}.</>
+        return <>{posts.length} posts within {posts[0].attributes.distance} miles of {posts[0].attributes.search_location}.</>
     } else {
        return <>{posts.length} posts listed.</>
      }

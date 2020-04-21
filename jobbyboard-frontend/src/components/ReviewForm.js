@@ -36,12 +36,11 @@ const ReviewForm = ({ classes, history, domain, session, match, users, alerts, u
     })
     .then(resp => resp.json())
     .then(json =>{
-      debugger;
       if (!!json.errors) {
         const errors = Object.keys(json.errors).map(field => json.errors[field].map(message => `${field.charAt(0).toUpperCase() + field.slice(1)} ${message}`)).flat()
         updateErrors(errors)
       } else {
-        console.log(json)
+        history.push(`/users/${match.params.id}`)
       }
     })
     .catch(error => console.log(error));
@@ -98,6 +97,7 @@ const ReviewForm = ({ classes, history, domain, session, match, users, alerts, u
            <TextField
              required
              select
+             type="number"
              fullWidth
              margin="normal"
              variant="outlined"
@@ -106,11 +106,11 @@ const ReviewForm = ({ classes, history, domain, session, match, users, alerts, u
              name="rating"
              {...rating}
              >
-             <MenuItem value={1}>1</MenuItem>
-             <MenuItem value={2}>2</MenuItem>
-             <MenuItem value={3}>3</MenuItem>
-             <MenuItem value={4}>4</MenuItem>
-             <MenuItem value={5}>5</MenuItem>
+             <MenuItem value={"1.0"}>1</MenuItem>
+             <MenuItem value={"2.0"}>2</MenuItem>
+             <MenuItem value={"3.0"}>3</MenuItem>
+             <MenuItem value={"4.0"}>4</MenuItem>
+             <MenuItem value={"5.0"}>5</MenuItem>
            </TextField>
           </Grid>
           <Button

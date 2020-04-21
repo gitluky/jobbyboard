@@ -3,7 +3,7 @@ class CreateReviews < ActiveRecord::Migration[6.0]
     create_table :reviews do |t|
       t.references :reviewer
       t.references :reviewee
-      t.integer :rating
+      t.float :rating, precision: 2, scale: 1
       t.string :title
       t.text :content
       t.timestamps

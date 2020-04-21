@@ -37,7 +37,6 @@ const PostForm = ({ classes, history, domain, session, match }) => {
           payment: payment.value
         }
       })
-      debugger;
     fetch(`${domain}/posts`, {
       method: 'POST',
       headers: {
