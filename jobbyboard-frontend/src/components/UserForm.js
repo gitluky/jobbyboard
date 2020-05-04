@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, Grid, Typography } from '@material-ui/core';
 import { DirectUpload } from 'activestorage';
-import Alerts from './Alerts'
 
 import useFormInput from '../hooks/useFormInput'
 
-const UserForm = ({ classes, history, domain, signInUser, session, fetchPath, fetchMethod, updateErrors, clearErrors, alerts }) => {
+const UserForm = ({ classes, history, domain, signInUser, session, fetchPath, fetchMethod, updateErrors, updateNotifications }) => {
   const name = useFormInput('');
   const email = useFormInput('');
   const password = useFormInput('');
   const city = useFormInput('');
   const state = useFormInput('');
   const [file, setFile] = useState('');
-
-  useEffect(() => {
-    if (!!alerts.errors) {
-      clearErrors();
-    }
-  }, [history])
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
@@ -68,6 +61,7 @@ const UserForm = ({ classes, history, domain, signInUser, session, fetchPath, fe
         })
         .then(resp => resp.json())
         .then(json => signInUser(domain, { email: email.value, password: password.value }, history))
+        .error(() => updateErrors(['An error occured. Please try again later.']))
       }
     })
   }
@@ -79,9 +73,6 @@ const UserForm = ({ classes, history, domain, signInUser, session, fetchPath, fe
   return(
     <>
       <Grid container className={classes.grid}>
-        <Grid container justify="center" direction="column" spacing={2} >
-         {Object.keys(alerts).some((alertType) => alertType.length > 0) && <Alerts alerts={alerts} />}
-        </Grid>
        <form className={classes.form} noValidate onSubmit={handleOnSubmit}>
          <Grid container spacing={2} >
            <Typography variant="h5">

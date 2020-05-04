@@ -8,7 +8,7 @@ import PostContainer from './components/PostContainer';
 import { fetchInitialPosts, fetchSearchResults } from './actions/postsActions';
 import { fetchUserData  } from './actions/usersActions';
 import { trySessionRefresh, signInUser, signOut } from './actions/authenticationActions';
-import { updateErrors, clearErrors } from './actions/alertsActions';
+import { updateErrors, clearAlerts, updateNotifications } from './actions/alertsActions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
 const App = (props) => {
   const classes = useStyles();
 
-  const { session, location, domain, history, fetchInitialPosts, trySessionRefresh, alerts} = props;
+  const { session, location, domain, history, fetchInitialPosts, trySessionRefresh, alerts } = props;
 
   useEffect(() => {
     const appendGoogleIconLink = () => {
@@ -61,19 +61,22 @@ const App = (props) => {
   },[])
 
   useEffect(() => {
-    if (session.isSignedIn){
-      fetchInitialPosts(domain, session.location);
-    } else {
-      fetchInitialPosts(domain);
-    }
+    let getInitialPosts = setTimeout(() => {
+      if (session.isSignedIn){
+        fetchInitialPosts(domain, session.location);
+      } else {
+        fetchInitialPosts(domain);
+      }
+    },500)
+    return () => clearTimeout(getInitialPosts)
   }, [session.isSignedIn])
 
   useEffect(() => {
     trySessionRefresh(domain, history);
-    let token_refresh_timer = setTimeout(() => {
+    let tokenRefreshTimer = setTimeout(() => {
       trySessionRefresh(domain, history);
     }, 900000)
-    return () => clearTimeout(token_refresh_timer)
+    return () => clearTimeout(tokenRefreshTimer)
   }, [])
 
   const displayCreatePostButton = () => {
@@ -107,7 +110,8 @@ export default connect(
     trySessionRefresh,
     signInUser,
     signOut,
-    clearErrors,
-    updateErrors
+    clearAlerts,
+    updateErrors,
+    updateNotifications
   }
   )(App);

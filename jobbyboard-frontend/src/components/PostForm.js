@@ -1,6 +1,6 @@
 import 'date-fns';
 import addDays from 'date-fns/addDays';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Grid, Typography, MenuItem, InputAdornment } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -10,14 +10,20 @@ import {
 } from '@material-ui/pickers';
 
 import useFormInput from '../hooks/useFormInput'
+import Alerts from './Alerts'
 
-const PostForm = ({ classes, history, domain, session, match }) => {
-  const title = useFormInput('');
-  const description = useFormInput('');
-  const city = useFormInput('');
-  const state = useFormInput('');
-  const duration = useFormInput('');
-  const payment = useFormInput('');
+const PostForm = ({ classes, alerts, history, method, domain, session, match, posts, updateErrors, updateNotifications }) => {
+
+  const getCurrentPost = () => posts ? posts.filter((post) => post.id.toString() === match.params.id)[0] : '';
+  const currentPost = getCurrentPost();
+
+  const postId = useFormInput(() => match.params.id || '')
+  const title = useFormInput(() => currentPost ? currentPost.attributes.title : '')
+  const description = useFormInput(() => currentPost ? currentPost.attributes.description : '')
+  const city = useFormInput(() => currentPost ? currentPost.attributes.location.split(',')[0] : '')
+  const state = useFormInput(() => currentPost ? currentPost.attributes.location.split(',')[1] : '')
+  const duration = useFormInput(() => currentPost ? currentPost.attributes.duration : '')
+  const payment = useFormInput(() => currentPost ? currentPost.attributes.payment : '')
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleDateChange = date => {
@@ -28,6 +34,7 @@ const PostForm = ({ classes, history, domain, session, match }) => {
     event.preventDefault();
     const postData = JSON.stringify({
         post: {
+          id: postId.value,
           title: title.value,
           description: description.value,
           city: city.value,
@@ -37,8 +44,9 @@ const PostForm = ({ classes, history, domain, session, match }) => {
           payment: payment.value
         }
       })
-    fetch(`${domain}/posts`, {
-      method: 'POST',
+    const url = method === 'POST' ? `${domain}/posts` : `${domain}/posts/${match.params.id}`
+    fetch(`${url}`, {
+      method: method,
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -47,8 +55,16 @@ const PostForm = ({ classes, history, domain, session, match }) => {
       body: postData
     })
     .then(resp => resp.json())
-    .then(json => console.log(json))
-    .catch(error => console.log(error));
+    .then(json => {
+      if (!!json.errors) {
+        const errors = Object.keys(json.errors).map(field => json.errors[field].map(message => `${field.charAt(0).toUpperCase() + field.slice(1)} ${message}`)).flat()
+        updateErrors(errors)
+      } else {
+        history.push(`/users/${session.id}`)
+        updateNotifications(json.notifications)
+      }
+    })
+    .catch(() => updateErrors(['An error occured. Please try again later.']));
   }
 
   return(
@@ -57,7 +73,7 @@ const PostForm = ({ classes, history, domain, session, match }) => {
        <form className={classes.form} noValidate onSubmit={handleOnSubmit}>
          <Grid container spacing={2} justify="center">
            <Typography variant="h5">
-             Create A New Post
+             { method === 'POST' ? 'Create A New Post' : 'Update Post' }
            </Typography>
          </Grid>
          <Grid container spacing={1} >
@@ -191,13 +207,15 @@ const PostForm = ({ classes, history, domain, session, match }) => {
               {...payment}
               />
           </Grid>
+          <div>
+          </div>
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-          >Create Post</Button>
+          >{ method === 'POST' ? 'Create Post' : 'Update Post' }</Button>
           </Grid>
         </form>
       </Grid>

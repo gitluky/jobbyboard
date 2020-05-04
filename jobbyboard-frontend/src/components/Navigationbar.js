@@ -56,11 +56,11 @@ const Navigationbar = (props) =>  {
     fetchUserData(`${domain}/users/${session.id}`, `${session.jwt}`, history)
   }
 
-  const handleClickJobbyboard = (event) => {
-    event.preventDefault();
-    history.push('/')
-    fetchInitialPosts(domain);
-  }
+  // const handleClickJobbyboard = (event) => {
+  //   event.preventDefault();
+  //   history.push('/')
+  //   fetchInitialPosts(domain);
+  // }
 
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = useRef(open);

@@ -5,18 +5,10 @@ class ReviewsController < ApplicationController
   def create
     review = Review.new(review_params)
     if review.save
-      render json: review
+      render json: { notifications: ['Your review has been submitted.']}
     else
       render json: { errors: review.errors }
     end
-  end
-
-  def update
-
-  end
-
-  def destroy
-
   end
 
   private

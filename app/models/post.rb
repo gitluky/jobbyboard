@@ -5,6 +5,8 @@ class Post < ApplicationRecord
   has_many :likers, through: :likes, source: :user
   has_many_attached :photos
 
+  validates :title, :description, :city, :state, :start_datetime, :expiration_datetime, :payment, presence: true
+
   geocoded_by :location
   reverse_geocoded_by :latitude, :longitude
   after_validation :geocode
@@ -37,8 +39,8 @@ class Post < ApplicationRecord
     datetime.strftime('%B, %d, %Y %H:%M')
   end
 
-  def formatted_created_at
-    formatted_ts(created_at)
+  def formatted_start_date
+    formatted_ts(start_datetime)
   end
 
   def formatted_exp_date

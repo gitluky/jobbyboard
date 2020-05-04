@@ -15,9 +15,9 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
-import defaultAvatar from '../images/default_avatar.png'
+import defaultAvatar from '../images/default_avatar.png';
 
-const Post = ({ classes, domain, history, session, post: { id, attributes: {user, title, formatted_created_at, formatted_exp_date, location, description, likers, active }}, formatDateTime}) => {
+const Post = ({ classes, domain, history, session, post: { id, attributes: {user, title, formatted_start_date, formatted_exp_date, location, description, likers, active }}, formatDateTime}) => {
 
   const [isExpanded, setIsExpanded] = useState(false)
   const [liked, setLiked] = useState(null)
@@ -115,7 +115,7 @@ const Post = ({ classes, domain, history, session, post: { id, attributes: {user
               <div>
                 <div>
                   <Typography variant="body2" component="p">
-                    Posted On: {formatDateTime(formatted_created_at)}
+                    Posted On: {formatDateTime(formatted_start_date)}
                   </Typography>
                 </div>
                 <div>
@@ -150,6 +150,25 @@ const Post = ({ classes, domain, history, session, post: { id, attributes: {user
                     </Grid>
                   </Card>
                 </Link>
+              </Grid>
+              <Grid container justify="center" style={{ marginTop: '1em'}}>
+                {(session.isSignedIn && session.id === user.id) &&
+                  <div>
+                    <Typography variant="body2" component="p">
+                      { active ?
+                        <>
+                        <Link to={"/users/" + user.id + "/posts/" + id + "/edit"} style={{ textDecoration: 'none', paddingRight: '1em', borderRight: '1px solid' }}>Edit</Link>
+                        <Link to={"/posts/" + id + "/deactivate"} style={{ textDecoration: 'none', padding: '0 1em', borderRight: '1px solid' }}>Deactivate</Link>
+                        <Link to={"/posts/" + id + "/delete"} style={{ textDecoration: 'none', padding: '0 1em' }}>Delete</Link>
+                        </>
+                        :
+                        <>
+                        <Link to={"/posts/" + id + "/duplicate"} style={{ textDecoration: 'none', padding: '0 1em'}}>Duplicate</Link>
+                        </>
+                      }
+                    </Typography>
+                  </div>
+                }
               </Grid>
             </Grid>
           </ExpansionPanelDetails>

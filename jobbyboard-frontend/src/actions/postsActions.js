@@ -5,6 +5,7 @@ export function fetchInitialPosts(domain, location='') {
     fetch(`${url}`)
     .then(resp => resp.json())
     .then(json => dispatch({ type: 'GET_INITIAL_POSTS', payload: json.data }))
+    .catch(() => dispatch({type: 'UPDATE_ERRORS', payload: ['An error occured. Please try again later.'] }))
   }
 }
 

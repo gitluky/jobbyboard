@@ -4,16 +4,10 @@ import Alerts from './Alerts';
 
 import useFormInput from '../hooks/useFormInput'
 
-const ReviewForm = ({ classes, history, domain, session, match, users, alerts, updateErrors, clearErrors }) => {
+const ReviewForm = ({ classes, history, domain, session, match, users, alerts, updateErrors, updateNotifications }) => {
   const title = useFormInput('');
   const content = useFormInput('');
   const rating = useFormInput('');
-
-  useEffect(() => {
-    if (!!alerts.errors) {
-      clearErrors();
-    }
-  }, [history])
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
@@ -43,16 +37,13 @@ const ReviewForm = ({ classes, history, domain, session, match, users, alerts, u
         history.push(`/users/${match.params.id}`)
       }
     })
-    .catch(error => console.log(error));
+    .catch(() => updateErrors(['An error occured. Please try again later.']));
   }
 
   return(
     <>
       <Grid container className={classes.grid}>
        <form className={classes.form} noValidate onSubmit={handleOnSubmit}>
-         <Grid container justify="center" direction="column" spacing={2} style={{ marginBottom: '1em'}}>
-          { !!alerts && <Alerts alerts={alerts} />}
-         </Grid>
          <Grid container spacing={2} justify="center">
            <Typography variant="h5">
              Write a review { users[match.params.id] ? `for ${users[match.params.id].attributes.name}` : '' }

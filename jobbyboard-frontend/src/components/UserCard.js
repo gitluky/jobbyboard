@@ -4,7 +4,14 @@ import { Grid, Typography } from '@material-ui/core';
 import defaultAvatar from '../images/default_avatar.png'
 import { Link } from 'react-router-dom';
 
-const UserCard = ({ classes, users, match, domain }) => {
+const UserCard = ({ classes, users, match, domain, session }) => {
+
+  const getReviewers = (users) => {
+    return users[match.params.id].attributes.reviews.map((review) => review.id)
+  }
+
+  const reviewers = users[match.params.id] ? getReviewers(users) : []
+
   return(
      <>
        <Grid container justify="center" direction="column">
@@ -48,7 +55,12 @@ const UserCard = ({ classes, users, match, domain }) => {
            </div>
          </Grid>
          <Grid container justify="center" style={{ marginTop: '1em'}}>
-           <Link to={`/users/${match.params.id}/review`}>Write Review</Link>
+           {
+            (session.isSignedIn && !reviewers.includes(session.id) && session.id.toString() !== match.params.id) &&
+              <>
+                <Link to={`/users/${match.params.id}/review`}>Write Review</Link>
+              </>
+           }
          </Grid>
        </Grid>
      </>
