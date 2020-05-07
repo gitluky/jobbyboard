@@ -13,13 +13,17 @@ const Alerts = ({alerts}) => {
   },[alerts])
 
   const formatAlerts = (alertMessages) => {
-    return(
-      <>
-      {alertMessages.map((message,i) => {
-        return <Grid container justify="center" key={i}>{message}</Grid>
-      })}
-      </>
-    )
+    if (!!alertMessages) {
+      return(
+        <>
+        {alertMessages.map((message,i) => {
+          return <Grid container justify="center" key={i}>{message}</Grid>
+        })}
+        </>
+      )
+    } else {
+      return ''
+    }
   }
 
   const displayAlerts = () => {

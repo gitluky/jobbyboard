@@ -11,10 +11,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit
-
-  end
-
   def update
     @user.update(user_params)
     render json: @user

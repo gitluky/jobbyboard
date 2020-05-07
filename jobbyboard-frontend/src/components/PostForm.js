@@ -12,10 +12,11 @@ import {
 import useFormInput from '../hooks/useFormInput'
 import Alerts from './Alerts'
 
-const PostForm = ({ classes, alerts, history, method, domain, session, match, posts, updateErrors, updateNotifications }) => {
+const PostForm = ({ classes, alerts, history, action, domain, session, match, posts, updateErrors, updateNotifications }) => {
 
-  const getCurrentPost = () => posts ? posts.filter((post) => post.id.toString() === match.params.id)[0] : '';
+  const getCurrentPost = () => !!posts ? posts.filter((post) => post.id.toString() === match.params.id)[0] : '';
   const currentPost = getCurrentPost();
+  const method = action === 'edit' ? 'PATCH' : 'POST';
 
   const postId = useFormInput(() => match.params.id || '')
   const title = useFormInput(() => currentPost ? currentPost.attributes.title : '')
@@ -32,18 +33,20 @@ const PostForm = ({ classes, alerts, history, method, domain, session, match, po
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
-    const postData = JSON.stringify({
-        post: {
-          id: postId.value,
-          title: title.value,
-          description: description.value,
-          city: city.value,
-          state: state.value,
-          start_datetime: `${selectedDate}`,
-          expiration_datetime: `${addDays(selectedDate, duration.value)}`,
-          payment: payment.value
-        }
-      })
+    const postData = {
+      post: {
+        title: title.value,
+        description: description.value,
+        city: city.value,
+        state: state.value,
+        start_datetime: `${selectedDate}`,
+        expiration_datetime: `${addDays(selectedDate, duration.value)}`,
+        payment: payment.value
+      }
+    }
+    if (method === 'PATCH') {
+      postData.post.id = postId.value
+    }
     const url = method === 'POST' ? `${domain}/posts` : `${domain}/posts/${match.params.id}`
     fetch(`${url}`, {
       method: method,
@@ -52,7 +55,7 @@ const PostForm = ({ classes, alerts, history, method, domain, session, match, po
         'Accept': 'application/json',
         'Authorization': `${session.jwt}`
       },
-      body: postData
+      body: JSON.stringify(postData)
     })
     .then(resp => resp.json())
     .then(json => {

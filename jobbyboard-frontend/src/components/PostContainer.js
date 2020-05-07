@@ -4,7 +4,7 @@ import UserPosts from './UserPosts';
 import { Container } from '@material-ui/core';
 import { Route } from 'react-router-dom';
 
-const PostContainer = ({ classes, history, users, posts,  domain, session, fetchSearchResults, fetchUserData }) => {
+const PostContainer = ({ classes, history, users, posts,  domain, session, fetchSearchResults, fetchUserData, updateNotifications }) => {
 
   const formatDateTime = (datetime) => {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -30,9 +30,9 @@ const PostContainer = ({ classes, history, users, posts,  domain, session, fetch
 
   return (
       <Container maxWidth="lg" className={classes.postContainer}>
-        <Route exact path="/" render={routerProps => <PostList {...routerProps} classes={classes} posts={posts.initialPosts} requesting={posts.requesting} domain={domain} session={session} formatDateTime={formatDateTime} /> } />
-        <Route path="/search" render={routerProps => <PostList {...routerProps} classes={classes} posts={posts.searchResults} requesting={posts.requesting} fetchSearchResults={fetchSearchResults} formatDateTime={formatDateTime} session={session} /> }/>
-        <Route path="/users/:id" render={routerProps => <UserPosts {...routerProps} classes={classes} domain={domain} session={session} users={users} requesting={posts.requesting} fetchUserData={fetchUserData} formatDateTime={formatDateTime} /> }/>
+        <Route exact path="/" render={routerProps => <PostList {...routerProps} classes={classes} posts={posts.initialPosts} requesting={posts.requesting} domain={domain} session={session} formatDateTime={formatDateTime} updateNotifications={updateNotifications}/> } />
+        <Route path="/search" render={routerProps => <PostList {...routerProps} classes={classes} posts={posts.searchResults} requesting={posts.requesting} fetchSearchResults={fetchSearchResults} formatDateTime={formatDateTime} session={session} updateNotifications={updateNotifications} /> }/>
+        <Route path="/users/:id" render={routerProps => <UserPosts {...routerProps} classes={classes} domain={domain} session={session} users={users} requesting={posts.requesting} fetchUserData={fetchUserData} formatDateTime={formatDateTime} updateNotifications={updateNotifications} /> }/>
       </Container>
   )
 }

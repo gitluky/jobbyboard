@@ -17,7 +17,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import defaultAvatar from '../images/default_avatar.png';
 
-const Post = ({ classes, domain, history, session, post: { id, attributes: {user, title, formatted_start_date, formatted_exp_date, location, description, likers, active }}, formatDateTime}) => {
+const Post = ({ classes, domain, history, session, post: { id, attributes: {user, title, formatted_start_date, formatted_exp_date, location, description, likers, active }}, formatDateTime, updateNotifications}) => {
 
   const [isExpanded, setIsExpanded] = useState(false)
   const [liked, setLiked] = useState(null)
@@ -44,7 +44,10 @@ const Post = ({ classes, domain, history, session, post: { id, attributes: {user
         body: JSON.stringify(likeData)
       })
       .then(resp => resp.json())
-      .then(json => setLiked(!liked))
+      .then(json => {
+        setLiked(!liked)
+        updateNotifications(json.notifications)
+      })
     } else {
       history.push('/login')
     }
@@ -64,10 +67,47 @@ const Post = ({ classes, domain, history, session, post: { id, attributes: {user
         body: JSON.stringify(unlikeData)
       })
       .then(resp => resp.json())
-      .then(json => setLiked(!liked))
+      .then(json => {
+        setLiked(!liked)
+        updateNotifications(json.notifications)
+      })
     } else {
       history.push('/login')
     }
+  }
+
+  const handleDeactivate = (event) => {
+    event.preventDefault();
+    fetch(`${domain}` + "/posts/" + id + "/deactivate",  {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': `${session.jwt}`
+      }
+    })
+    .then(resp => resp.json())
+    .then(json => {
+      history.push(`/users/${session.id}`)
+      updateNotifications(json.notifications)
+    })
+  }
+
+  const handleDelete = (event) => {
+    event.preventDefault();
+    fetch(`${domain}` + "/posts/" + id + "/delete",  {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': `${session.jwt}`
+      }
+    })
+    .then(resp => resp.json())
+    .then(json => {
+      history.push(`/users/${session.id}`)
+      updateNotifications(json.notifications)
+    })
   }
 
   return(
@@ -158,14 +198,14 @@ const Post = ({ classes, domain, history, session, post: { id, attributes: {user
                       { active ?
                         <>
                         <Link to={"/users/" + user.id + "/posts/" + id + "/edit"} style={{ textDecoration: 'none', paddingRight: '1em', borderRight: '1px solid' }}>Edit</Link>
-                        <Link to={"/posts/" + id + "/deactivate"} style={{ textDecoration: 'none', padding: '0 1em', borderRight: '1px solid' }}>Deactivate</Link>
-                        <Link to={"/posts/" + id + "/delete"} style={{ textDecoration: 'none', padding: '0 1em' }}>Delete</Link>
+                        <Link to={"/posts/" + id + "/deactivate"} style={{ textDecoration: 'none', padding: '0 1em', borderRight: '1px solid' }} onClick={handleDeactivate}>Deactivate</Link>
                         </>
                         :
                         <>
                         <Link to={"/posts/" + id + "/duplicate"} style={{ textDecoration: 'none', padding: '0 1em'}}>Duplicate</Link>
                         </>
                       }
+                      <Link onClick={handleDelete} to={"/posts/" + id + "/delete"} style={{ textDecoration: 'none', padding: '0 1em' }}>Delete</Link>
                     </Typography>
                   </div>
                 }

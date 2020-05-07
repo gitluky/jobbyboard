@@ -27,14 +27,14 @@ TabPanel.propTypes = {
 };
 
 
-const UserPosts = ({classes, location, history, match, domain, session, fetchUserData, users, requesting, formatDateTime}) => {
+const UserPosts = ({classes, location, history, match, domain, session, fetchUserData, users, requesting, formatDateTime, updateNotifications}) => {
   const user = users[match.params.id] || null;
 
   const [value, setValue] = useState(0);
 
   useEffect(() => {
     fetchUserData(`${domain}/users/${match.params.id}`, `${session.jwt}`, history);
-  }, []);
+  }, [location]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -51,13 +51,13 @@ const UserPosts = ({classes, location, history, match, domain, session, fetchUse
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <PostList posts={user ? user.attributes.active_posts : []} classes={classes} user={user} history={history} domain={domain} session={session} requesting={requesting} formatDateTime={formatDateTime}/>
+        <PostList posts={user ? user.attributes.active_posts : []} classes={classes} user={user} history={history} domain={domain} session={session} requesting={requesting} formatDateTime={formatDateTime} updateNotifications={updateNotifications}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <PostList posts={user ? user.attributes.inactive_posts : []} classes={classes} user={user} history={history} domain={domain} session={session} requesting={requesting} formatDateTime={formatDateTime}/>
+        <PostList posts={user ? user.attributes.inactive_posts : []} classes={classes} user={user} history={history} domain={domain} session={session} requesting={requesting} formatDateTime={formatDateTime} updateNotifications={updateNotifications}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <PostList posts={user ? user.attributes.liked_posts : []} classes={classes} user={user} history={history} domain={domain} session={session} requesting={requesting} formatDateTime={formatDateTime}/>
+        <PostList posts={user ? user.attributes.liked_posts : []} classes={classes} user={user} history={history} domain={domain} session={session} requesting={requesting} formatDateTime={formatDateTime} updateNotifications={updateNotifications}/>
       </TabPanel>
       <TabPanel value={value} index={3}>
         <Reviews reviews={user ? user.attributes.reviews : []} formatDateTime={formatDateTime}/>

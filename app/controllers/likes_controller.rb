@@ -5,13 +5,13 @@ class LikesController < ApplicationController
   def create
     post = Post.find_by(id: like_params[:post_id])
     like = post.likes.find_or_create_by(like_params)
-    render json: like
+    render json: {notifications: ['Liked!']}
   end
 
   def destroy
     @like.destroy
     likes = current_user.likes
-    render json: likes
+    render json: {notifications: ['Unliked!']}
   end
 
   private

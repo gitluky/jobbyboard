@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :reviews, only: [:create, :update, :destroy]
+  resources :reviews, only: [:create]
 
   root 'application#index'
 
@@ -10,9 +10,8 @@ Rails.application.routes.draw do
   post 'posts/:id/like', to: 'likes#create'
   delete 'posts/:id/unlike', to: 'likes#destroy'
   get 'dashboard', to: 'posts#index'
-  get 'posts/:id/activate', to: 'posts#activate'
   get 'posts/:id/deactivate', to: 'posts#deactivate'
-  get 'posts/:id/cancel', to: 'posts#cancel'
+  delete 'posts/:id/delete', to: 'posts#destroy'
   get 'search', to: 'posts#search'
 
 
