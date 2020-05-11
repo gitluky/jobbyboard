@@ -1,11 +1,14 @@
 class Post < ApplicationRecord
   extend Geocoder::Model::ActiveRecord
+  include ActionView::Helpers::NumberHelper
+
   belongs_to :user
   has_many :likes
   has_many :likers, through: :likes, source: :user
   has_many_attached :photos
 
-  validates :title, :description, :city, :state, :start_datetime, :expiration_datetime, :payment, presence: true
+  validates :title, :description, :city, :state, :start_datetime, :payment, presence: true
+  validates :expiration_datetime, presence: { message: "/Duration can't be blank."}
 
   geocoded_by :location
   reverse_geocoded_by :latitude, :longitude
@@ -45,6 +48,10 @@ class Post < ApplicationRecord
 
   def formatted_exp_date
     formatted_ts(expiration_datetime)
+  end
+
+  def payment_in_dollars
+    number_with_precision(self.payment, precision: 2)
   end
 
   def self.find_by_query_params(q, location, distance)

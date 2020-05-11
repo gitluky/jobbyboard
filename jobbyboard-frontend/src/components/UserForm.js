@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button, Grid, Typography } from '@material-ui/core';
 import { DirectUpload } from 'activestorage';
 
-import useFormInput from '../hooks/useFormInput'
+import useFormInput from '../hooks/useFormInput';
 
 const UserForm = ({ classes, history, domain, signInUser, session, fetchPath, fetchMethod, updateErrors, updateNotifications }) => {
   const name = useFormInput('');
@@ -61,7 +61,7 @@ const UserForm = ({ classes, history, domain, signInUser, session, fetchPath, fe
         })
         .then(resp => resp.json())
         .then(json => signInUser(domain, { email: email.value, password: password.value }, history))
-        .error(() => updateErrors(['An error occured. Please try again later.']))
+        .catch(() => updateErrors(['An error occured. Please try again later.']))
       }
     })
   }

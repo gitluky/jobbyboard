@@ -9,8 +9,9 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 
-import useFormInput from '../hooks/useFormInput'
-import Alerts from './Alerts'
+import useFormInput from '../hooks/useFormInput';
+import Alerts from './Alerts';
+import XToUserProfileButton from './XToUserProfileButton';
 
 const PostForm = ({ classes, alerts, history, action, domain, session, match, posts, updateErrors, updateNotifications }) => {
 
@@ -23,11 +24,11 @@ const PostForm = ({ classes, alerts, history, action, domain, session, match, po
   const description = useFormInput(() => currentPost ? currentPost.attributes.description : '')
   const city = useFormInput(() => currentPost ? currentPost.attributes.location.split(',')[0] : '')
   const state = useFormInput(() => currentPost ? currentPost.attributes.location.split(',')[1] : '')
-  const duration = useFormInput(() => currentPost ? currentPost.attributes.duration : '')
+  const duration = useFormInput(() => currentPost ? currentPost.attributes.duration : undefined)
   const payment = useFormInput(() => currentPost ? currentPost.attributes.payment : '')
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const handleDateChange = date => {
+  const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
@@ -74,6 +75,7 @@ const PostForm = ({ classes, alerts, history, action, domain, session, match, po
     <>
       <Grid container className={classes.grid}>
        <form className={classes.form} noValidate onSubmit={handleOnSubmit}>
+         <XToUserProfileButton id={session.id} history={history} />
          <Grid container spacing={2} justify="center">
            <Typography variant="h5">
              { method === 'POST' ? 'Create A New Post' : 'Update Post' }

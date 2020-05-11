@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const UserCard = ({ classes, users, match, domain, session }) => {
 
   const getReviewers = (users) => {
-    return users[match.params.id].attributes.reviews.map((review) => review.id)
+    return users[match.params.id].attributes.reviews.map((review) => review.reviewer.id)
   }
 
   const reviewers = users[match.params.id] ? getReviewers(users) : []
@@ -55,8 +55,7 @@ const UserCard = ({ classes, users, match, domain, session }) => {
            </div>
          </Grid>
          <Grid container justify="center" style={{ marginTop: '1em'}}>
-           {
-            (session.isSignedIn && !reviewers.includes(session.id) && session.id.toString() !== match.params.id) &&
+           {(session.isSignedIn && !reviewers.includes(session.id) && session.id.toString() !== match.params.id) &&
               <>
                 <Link to={`/users/${match.params.id}/review`}>Write Review</Link>
               </>

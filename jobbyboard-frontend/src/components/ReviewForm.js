@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button, Grid, Typography, MenuItem } from '@material-ui/core';
 import Alerts from './Alerts';
 
-import useFormInput from '../hooks/useFormInput'
+import useFormInput from '../hooks/useFormInput';
+import XToUserProfileButton from './XToUserProfileButton';
 
 const ReviewForm = ({ classes, history, domain, session, match, users, alerts, updateErrors, updateNotifications }) => {
   const title = useFormInput('');
@@ -44,6 +45,7 @@ const ReviewForm = ({ classes, history, domain, session, match, users, alerts, u
     <>
       <Grid container className={classes.grid}>
        <form className={classes.form} noValidate onSubmit={handleOnSubmit}>
+         <XToUserProfileButton id={match.params.id} history={history} />
          <Grid container spacing={2} justify="center">
            <Typography variant="h5">
              Write a review { users[match.params.id] ? `for ${users[match.params.id].attributes.name}` : '' }

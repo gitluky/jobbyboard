@@ -14,10 +14,10 @@ const PostContainer = ({ classes, history, users, posts,  domain, session, fetch
     const year = newDateTime.getFullYear()
     const hour = () => {
       const val = newDateTime.getHours();
-      switch(val) {
-          case 0:
+      switch(true) {
+          case val == 0:
             return '12'
-          case (val > 12):
+          case val > 12:
             return val - 12;
           default:
             return val
