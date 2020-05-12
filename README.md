@@ -1,24 +1,20 @@
-# README
+Jobbyboard
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a web application where users can post help wanted ads, search and view posts by other users, 'like' posts, and leave reviews with a rating for other users.
+It is React front-end app with a Rails back-end API.
 
-Things you may want to cover:
+Pre-requisites:
 
-* Ruby version
+Ruby 2.6.0 or higher
 
-* System dependencies
+Installation
 
-* Configuration
+Clone this repository and run $'bundle install' to get the required gems listed in the Gemfile. Run $rails db:migrate to set up the database. For mock user account data: a) Adjust the data in the seed file b) Run $rails db:seed
 
-* Database creation
+config/ssl folder requires server.crt and server.key files to start the Rails server in HTTPS.
 
-* Database initialization
+Contributing Bug reports and pull requests are welcome on GitHub at https://github.com/gitluky/jobbyboard. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the Contributor Covenant code of conduct.
 
-* How to run the test suite
+License Available as open source under the terms of the MIT License.
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Code of Conduct Everyone interacting in the jobbyboard's codebases, issue trackers, chat rooms and mailing lists is expected to follow the code of conduct.

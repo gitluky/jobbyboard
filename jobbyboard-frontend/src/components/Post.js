@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card,
         CardContent,
         Typography,
@@ -17,17 +17,19 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import defaultAvatar from '../images/default_avatar.png';
 
-const Post = ({ classes, domain, history, session, post: { id, attributes: {user, title, formatted_start_date, formatted_exp_date, location, description, likers, editable }}, formatDateTime, updateNotifications}) => {
+const Post = ({ classes, domain, history, session, post: { id, attributes: {user, title, payment, formatted_start_date, formatted_exp_date, location, description, likers, editable }}, formatDateTime, updateNotifications}) => {
 
-  const [isExpanded, setIsExpanded] = useState(false)
-  const [liked, setLiked] = useState(null)
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [liked, setLiked] = useState(null);
+  const expandedCard = useRef(null);
 
   useEffect(() => {
     if (session.isSignedIn) setLiked(() => likers.includes(session.id))
   }, [session])
 
   const handleExpansion = () => {
-    setIsExpanded(!isExpanded)
+    setIsExpanded(!isExpanded);
+    expandedCard.current.focus();
   }
 
   const handleLike = (event) => {
@@ -113,10 +115,11 @@ const Post = ({ classes, domain, history, session, post: { id, attributes: {user
   return(
     <Grid item>
       <Card>
-        <Grid style={{background: '#3f51b5', paddingTop: '.5em', color: 'white'}}>
-          <Typography variant="h5" component="h2">
-            {(session.isSignedIn && user.id !== session.id) ?
-              <>
+        <Grid container ref={expandedCard} style={{background: '#3f51b5', paddingTop: '.5em', color: 'white', justifyContent: 'space-between'}} >
+          <Grid item>
+            <Typography variant="h5" component="h2">
+              {(session.isSignedIn && user.id !== session.id) ?
+                <>
                 {!liked ?
                   <Button onClick={handleLike} color="inherit"><FavoriteBorderOutlinedIcon/></Button>
                   :
@@ -126,13 +129,14 @@ const Post = ({ classes, domain, history, session, post: { id, attributes: {user
               :
               <Button disabled><FavoriteBorderOutlinedIcon/></Button>
             }
-          {title}
-
-          { session.isSignedIn && user === session.id &&
-            <>
-            <Button component={ Link } to={`/posts/${id}`} color="primary">View</Button>
-            </> }
+            {title}
           </Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant="h5" component="h2" style={{marginRight: '1em'}}>
+              ${payment}
+            </Typography>
+          </Grid>
         </Grid>
         <ExpansionPanel style={{margin: "0", padding: '0'}}>
           <ExpansionPanelSummary
@@ -141,7 +145,7 @@ const Post = ({ classes, domain, history, session, post: { id, attributes: {user
             onClick={handleExpansion}
             style={{userSelect: "auto"}}
           >
-            <CardContent  style={{margin: "0", padding: '0 0 8px'}}>
+            <CardContent style={{margin: "0", padding: '0 0 8px'}}>
               <Typography color="textSecondary">
                 {location}
               </Typography>

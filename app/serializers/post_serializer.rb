@@ -11,8 +11,12 @@ class PostSerializer
     params[:distance]
   end
 
-  attribute :active do |post|
-    post.active?
+  attribute :payment do |post|
+    post.payment_in_dollars
+  end
+
+  attribute :editable do |post|
+    post.active? || post.future?
   end
 
 end
