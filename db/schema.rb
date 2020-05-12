@@ -55,8 +55,6 @@ ActiveRecord::Schema.define(version: 2020_04_08_234910) do
     t.float "longitude"
     t.float "latitude"
     t.bigint "user_id"
-    t.boolean "deactivated", default: false
-    t.datetime "deactivated_datetime"
     t.decimal "payment", precision: 16, scale: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

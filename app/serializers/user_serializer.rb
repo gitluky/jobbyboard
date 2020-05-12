@@ -5,13 +5,19 @@ class UserSerializer
 
   attribute :active_posts do |user|
     user.active_posts.map do |post|
-      {id: post.id, type: 'post', attributes: {user: { id: user.id , name: user.name, email: user.email }, title: post.title, description: post.description, formatted_start_date: post.formatted_start_date, formatted_exp_date: post.formatted_exp_date, location: post.location, payment: post.payment_in_dollars, likers: post.likers.map(&:id), active: true}}
+      {id: post.id, type: 'post', attributes: {user: { id: user.id , name: user.name, email: user.email }, title: post.title, description: post.description, formatted_start_date: post.formatted_start_date, formatted_exp_date: post.formatted_exp_date, location: post.location, payment: post.payment_in_dollars, likers: post.likers.map(&:id), editable: true}}
     end
   end
 
   attribute :inactive_posts do |user|
     user.inactive_posts.map do |post|
-      {id: post.id, type: 'post', attributes: {user: { id: user.id, name: user.name, email: user.email }, title: post.title, description: post.description, formatted_start_date: post.formatted_start_date, formatted_exp_date: post.formatted_exp_date, location: post.location, payment: post.payment_in_dollars, likers: post.likers.map(&:id), active: false}}
+      {id: post.id, type: 'post', attributes: {user: { id: user.id, name: user.name, email: user.email }, title: post.title, description: post.description, formatted_start_date: post.formatted_start_date, formatted_exp_date: post.formatted_exp_date, location: post.location, payment: post.payment_in_dollars, likers: post.likers.map(&:id), editable: false}}
+    end
+  end
+
+  attribute :future_posts do |user|
+    user.future_posts.map do |post|
+      {id: post.id, type: 'post', attributes: {user: { id: user.id, name: user.name, email: user.email }, title: post.title, description: post.description, formatted_start_date: post.formatted_start_date, formatted_exp_date: post.formatted_exp_date, location: post.location, payment: post.payment_in_dollars, likers: post.likers.map(&:id), editable: true}}
     end
   end
 

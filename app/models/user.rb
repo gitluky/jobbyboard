@@ -37,6 +37,10 @@ class User < ApplicationRecord
     self.posts.select {|post| post.inactive?}
   end
 
+  def future_posts
+    self.posts.select {|post| post.future?}
+  end
+
   def rating
     if !self.received_reviews.empty?
       average = self.received_reviews.map {|review| review.rating }.inject{|sum, el| sum + el } / self.received_reviews.size

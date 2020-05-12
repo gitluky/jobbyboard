@@ -21,7 +21,8 @@ class PostsController < ApplicationController
   end
 
   def search
-    posts = Post.find_by_query_params(params[:q], params[:location], params[:distance])
+    location = search_params[:location] == nil ? 'New York, NY' : search_params[:location]
+    posts = Post.find_by_query_params(search_params[:q], location, search_params[:distance])
     render json: PostSerializer.new(posts)
   end
 
@@ -47,6 +48,10 @@ class PostsController < ApplicationController
 
   def deactivate_or_destroy_params
     params.permit(:id)
+  end
+
+  def search_params
+    params.permit(:q, :location, :distance)
   end
 
   def post_params

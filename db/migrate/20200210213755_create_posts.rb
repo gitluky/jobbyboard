@@ -11,9 +11,6 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.float :latitude
       t.belongs_to :user
 
-      t.boolean :deactivated, default: false
-      t.datetime :deactivated_datetime
-
       t.decimal :payment, precision: 16, scale: 2
 
       t.timestamps

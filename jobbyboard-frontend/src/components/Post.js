@@ -17,7 +17,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import defaultAvatar from '../images/default_avatar.png';
 
-const Post = ({ classes, domain, history, session, post: { id, attributes: {user, title, formatted_start_date, formatted_exp_date, location, description, likers, active }}, formatDateTime, updateNotifications}) => {
+const Post = ({ classes, domain, history, session, post: { id, attributes: {user, title, formatted_start_date, formatted_exp_date, location, description, likers, editable }}, formatDateTime, updateNotifications}) => {
 
   const [isExpanded, setIsExpanded] = useState(false)
   const [liked, setLiked] = useState(null)
@@ -195,7 +195,7 @@ const Post = ({ classes, domain, history, session, post: { id, attributes: {user
                 {(session.isSignedIn && session.id === user.id) &&
                   <div>
                     <Typography variant="body2" component="p">
-                      { active ?
+                      { editable ?
                         <>
                         <Link to={"/users/" + user.id + "/posts/" + id + "/edit"} style={{ textDecoration: 'none', paddingRight: '1em', borderRight: '1px solid' }}>Edit</Link>
                         <Link to={"/posts/" + id + "/deactivate"} style={{ textDecoration: 'none', padding: '0 1em', borderRight: '1px solid' }} onClick={handleDeactivate}>Deactivate</Link>

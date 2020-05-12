@@ -14,16 +14,12 @@ class Post < ApplicationRecord
   reverse_geocoded_by :latitude, :longitude
   after_validation :geocode
 
-  def current_assignment
-    self.assigned ? self.assignments.order(created_at: desc).first : nil
-  end
-
   def active?
-    !deactivated && started? && !expired?
+    !future? && started? && !expired?
   end
 
   def inactive?
-    deactivated? || expired?
+    future? || expired?
   end
 
   def started?
@@ -32,6 +28,10 @@ class Post < ApplicationRecord
 
   def expired?
     expiration_datetime < DateTime.now
+  end
+
+  def future?
+    start_datetime > DateTime.now
   end
 
   def location
@@ -56,7 +56,8 @@ class Post < ApplicationRecord
 
   def self.find_by_query_params(q, location, distance)
     posts_by_location = self.near(location, distance)
-    q != '' ? posts_by_location.where("LOWER(posts.title) like LOWER(?) OR LOWER(posts.description) like LOWER(?)", "%#{q}%", "%#{q}%") : posts_by_location
+    posts = q != '' ? posts_by_location.where("LOWER(posts.title) like LOWER(?) OR LOWER(posts.description) like LOWER(?)", "%#{q}%", "%#{q}%") : posts_by_location
+    posts.select {|post| post.active?}
   end
 
   def toggle_deactivated_status(flag)
