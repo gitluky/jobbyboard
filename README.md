@@ -3,7 +3,7 @@ Jobbyboard
 This is a web application where users can post help wanted ads, search and view posts by other users, 'like' posts, and leave reviews with a rating for other users.
 It is React front-end app with a Rails back-end API.
 
-Demo: https://vimeo.com/277241558
+Demo: https://vimeo.com/417499676
 
 Pre-requisites:
 
