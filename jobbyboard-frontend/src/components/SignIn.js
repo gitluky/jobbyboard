@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Typography, Grid, TextField, Button } from '@material-ui/core';
 
 import useFormInput from '../hooks/useFormInput';

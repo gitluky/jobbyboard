@@ -1,6 +1,6 @@
 import 'date-fns';
 import addDays from 'date-fns/addDays';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { TextField, Button, Grid, Typography, MenuItem, InputAdornment } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -10,7 +10,6 @@ import {
 } from '@material-ui/pickers';
 
 import useFormInput from '../hooks/useFormInput';
-import Alerts from './Alerts';
 import XToUserProfileButton from './XToUserProfileButton';
 
 const PostForm = ({ classes, alerts, history, action, domain, session, match, posts, updateErrors, updateNotifications }) => {

@@ -15,7 +15,7 @@ const PostContainer = ({ classes, history, users, posts,  domain, session, fetch
     const hour = () => {
       const val = newDateTime.getHours();
       switch(true) {
-          case val == 0:
+          case val === 0:
             return '12'
           case val > 12:
             return val - 12;

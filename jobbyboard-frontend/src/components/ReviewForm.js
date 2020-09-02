@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { TextField, Button, Grid, Typography, MenuItem } from '@material-ui/core';
-import Alerts from './Alerts';
 
 import useFormInput from '../hooks/useFormInput';
 import XToUserProfileButton from './XToUserProfileButton';

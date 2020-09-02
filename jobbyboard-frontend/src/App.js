@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
 const App = (props) => {
   const classes = useStyles();
 
-  const { session, location, domain, history, fetchInitialPosts, trySessionRefresh, alerts } = props;
+  const { session, domain, history, fetchInitialPosts, trySessionRefresh, alerts } = props;
 
   useEffect(() => {
     const appendGoogleIconLink = () => {

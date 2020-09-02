@@ -11,7 +11,6 @@ import { Card,
 import { Link } from 'react-router-dom';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
@@ -80,7 +79,7 @@ const Post = ({ classes, domain, history, session, post: { id, attributes: {user
 
   const handleDeactivate = (event) => {
     event.preventDefault();
-    fetch(`${domain}` + "/posts/" + id + "/deactivate",  {
+    fetch(`${domain}/posts/${id}/deactivate`,  {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -97,7 +96,7 @@ const Post = ({ classes, domain, history, session, post: { id, attributes: {user
 
   const handleDelete = (event) => {
     event.preventDefault();
-    fetch(`${domain}` + "/posts/" + id + "/delete",  {
+    fetch(`${domain}/posts/${id}/delete`,  {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

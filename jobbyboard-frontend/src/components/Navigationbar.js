@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { makeStyles, AppBar, Toolbar, Typography, Button, IconButton, MenuItem, ClickAwayListener, Paper, Popper, MenuList } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Navigationbar = (props) =>  {
-  const { domain, session, signOut, history, match, fetchUserData, fetchInitialPosts } = props;
+  const { domain, session, signOut, history, fetchUserData } = props;
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
