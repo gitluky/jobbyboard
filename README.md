@@ -13,8 +13,6 @@ Installation
 
 Clone this repository and run $'bundle install' to get the required gems listed in the Gemfile. Run $rails db:migrate to set up the database. For mock user account data: a) Adjust the data in the seed file b) Run $rails db:seed
 
-config/ssl folder requires server.crt and server.key files to start the Rails server in HTTPS.
-
 **Requires redux_devtools: https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd OR simply remove it from the compose function in index.js
 
 Contributing Bug reports and pull requests are welcome on GitHub at https://github.com/gitluky/jobbyboard. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the Contributor Covenant code of conduct.
