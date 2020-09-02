@@ -15,6 +15,8 @@ Clone this repository and run $'bundle install' to get the required gems listed 
 
 config/ssl folder requires server.crt and server.key files to start the Rails server in HTTPS.
 
+**Requires redux_devtools: https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd OR simply remove it from the compose function in index.js
+
 Contributing Bug reports and pull requests are welcome on GitHub at https://github.com/gitluky/jobbyboard. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the Contributor Covenant code of conduct.
 
 License Available as open source under the terms of the MIT License.

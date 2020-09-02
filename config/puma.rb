@@ -21,10 +21,10 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 
 # bind 'ssl://127.0.0.1:3001?key=config/ssl/server.key&cert=config/ssl/server.crt'
 
-ssl_bind '127.0.0.1', '3001', {
-  key: 'config/ssl/server.key',
-  cert: 'config/ssl/server.crt'
-}
+# ssl_bind '127.0.0.1', '3001', {
+#   key: 'config/ssl/server.key',
+#   cert: 'config/ssl/server.crt'
+# }
 
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked web server processes. If using threads and workers together
